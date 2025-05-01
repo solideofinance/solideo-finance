@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solideo Finances</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+      animation: fadeIn 1s ease-in;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+    header img {
+      width: 80px;
+      display: block;
+      margin: 0 auto 1rem;
+      animation: popIn 1s ease-out;
+    }
+    @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    section {
+      max-width: 900px;
+      margin: 2rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 1.5s ease-in;
+    }
+    h1, h2 { color: #003366; }
+    .slogan { font-style: italic; color: #ccc; margin-top: -10px; }
+    ul { padding-left: 1.5rem; }
+
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .slides {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slides img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      filter: blur(4px);
+      transform: scale(1.1);
+      transition: opacity 1s ease, filter 1s ease, transform 1s ease;
+    }
+
+    .slides img.active {
+      opacity: 1;
+      filter: blur(0);
+      transform: scale(1);
+      z-index: 2;
+    }
+
+    .contact-button {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.8rem 1.5rem;
+      background-color: #003366;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: background 0.3s ease, transform 0.3s ease;
+      font-weight: bold;
+    }
+
+    .contact-button:hover {
+      background-color: #0055aa;
+      transform: scale(1.05);
+    }
+
+    blockquote {
+      margin: 1rem 0;
+      padding: 1rem;
+      background: #f0f8ff;
+      border-left: 5px solid #003366;
+      font-style: italic;
+    }
+    blockquote footer {
+      margin-top: 0.5rem;
+      font-style: normal;
+      font-weight: bold;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    form input, form textarea {
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form button {
+      padding: 0.7rem;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #eeeeee;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header, section { padding: 1rem; }
+      h1 { font-size: 1.5rem; }
+      .slider { height: 250px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo solideo.jpg" alt="Solideo logo">
+    <h1>Solideo Finances</h1>
+    <p class="slogan">« Bâtir ensemble votre avenir financier »</p>
+  </header>
+
+  <section>
+    <h2>Qui sommes-nous ?</h2>
+    <div class="slider">
+      <div class="slides">
+        <img src="BPIMACRON.jpg" alt="Agence de financement" class="active">
+        <img src="BPI2.jpg" alt="Offre financeme32700_960_720.jpgnt">
+        <img src="PT6.jpg" alt="Financement projet">
+        <img src="PT4.jpg" alt="Financement projet">
+        <img src="PT5.jpg" alt="Financement projet">
+      </div>
+    </div>
+    <p>Solideo Finances est une agence de financement innovante et humaine, implantée en France, qui accompagne les particuliers, indépendants et petites entreprises dans la réalisation de leurs projets financiers.</p>
+    <p>Notre objectif : apporter des solutions accessibles, sur-mesure et 100% transparentes.</p>
+  </section>
+
+  <section>
+    <h2>Nos 3 piliers</h2>
+    <h3>1. Accompagnement personnalisé et humain</h3>
+    <p>Chez Solideo Finances, chaque client est unique. Nos conseillers financiers sont formés pour écouter, comprendre et orienter chacun vers la solution la plus adaptée à sa situation.</p>
+    <h3>2. Transparence & pédagogie financière</h3>
+    <p>Nous vulgarisons les informations clés pour aider nos clients à prendre des décisions éclairées.</p>
+    <h3>3. Solutions sur-mesure et accessibles</h3>
+    <p>Grâce à notre réseau de partenaires bancaires, nous proposons des offres variées et flexibles, même en cas de refus bancaire initial.</p>
+  </section>
+
+  <section>
+    <h2>Témoignages clients</h2>
+    <blockquote>
+      <p>"J'étais perdu avec mes dettes jusqu'à ce que Solideo me guide pas à pas. Aujourd'hui, je respire financièrement."</p>
+      <footer>– Karim T., 34 ans, auto-entrepreneur à Marseille</footer>
+    </blockquote>
+    <blockquote>
+      <p>"Grâce à Solideo, j’ai obtenu un crédit immo en 15 jours. Équipe super réactive et humaine !"</p>
+      <footer>– Léa D., 28 ans, infirmière à Lyon</footer>
+    </blockquote>
+
+    <h3>Laissez votre témoignage</h3>
+    <form action="#" method="post">
+      <input type="text" name="nom" placeholder="Votre nom" required>
+      <input type="text" name="ville" placeholder="Ville">
+      <textarea name="message" placeholder="Votre témoignage..." required></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Offre de lancement</h2>
+    <p>Pour toute première demande de financement réalisée avant le 30 juin, bénéficiez de :</p>
+    <ul>
+      <li>Une simulation gratuite et détaillée</li>
+      <li>Des frais de dossier réduits de 50%</li>
+      <li>Un rendez-vous conseil personnalisé offert</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p><strong>Site web :</strong> www.solideo-finances.fr</p>
+    <p><strong>Whatsapp :</strong> 07 56 82 39 16</p>
+    <p><strong>Email :</strong> solideofinance@gmail.com</p>
+    <a href="mailto:contact@solideo-finances.fr" class="contact-button">Contactez-nous</a>
+  </section>
+
+  <footer>
+    &copy; 2025 Solideo Finances. Tous droits réservés.
+  </footer>
+
+  <script>
+    const slides = document.querySelectorAll('.slides img');
+    let current = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    setInterval(() => {
+      current = (current + 1) % slides.length;
+      showSlide(current);
+    }, 4000);
+  </script>
+</body>
+</html>
