@@ -143,6 +143,61 @@
       cursor: pointer;
     }
 
+    .stats-modern {
+  background: linear-gradient(to right, #003366, #0055aa);
+  color: white;
+  text-align: center;
+  padding: 3rem 1rem;
+  border-radius: 10px;
+  margin: 2rem auto;
+  max-width: 1000px;
+}
+
+.stats-modern h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.stat-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+  width: 100%;
+  max-width: 220px;
+}
+
+.stat-box:hover {
+  transform: scale(1.05);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.stat-box .icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-box h3 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.stat-box p {
+  margin: 0.3rem 0 0;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+
     footer {
       text-align: center;
       padding: 1rem;
@@ -236,6 +291,32 @@
     <a href="mailto:solideofinance@gmail.com" class="contact-button">Contactez-nous</a>
   </section>
 
+<section id="stats-section" class="stats-modern">
+  <h2>Nos chiffres clés</h2>
+  <div class="stats-grid">
+    <div class="stat-box">
+      <span class="icon">👥</span>
+      <h3 data-target="25000">0</h3>
+      <p>Visiteurs uniques</p>
+    </div>
+    <div class="stat-box">
+      <span class="icon">🌟</span>
+      <h3 data-target="98">0</h3>
+      <p>Clients satisfaits (%)</p>
+    </div>
+    <div class="stat-box">
+      <span class="icon">💼</span>
+      <h3 data-target="350">0</h3>
+      <p>Dossiers financés</p>
+    </div>
+    <div class="stat-box">
+      <span class="icon">⭐</span>
+      <h3 data-target="4.9">0</h3>
+      <p>Note moyenne</p>
+    </div>
+  </div>
+</section>
+
   <footer>
     &copy; 2025 Solideo Finances. Tous droits réservés.
   </footer>
@@ -255,5 +336,41 @@
       showSlide(current);
     }, 4000);
   </script>
+  <script>
+  const counters = document.querySelectorAll('#stats-section h3');
+  let statsStarted = false;
+
+  function animateCounters() {
+    counters.forEach(counter => {
+      const target = parseFloat(counter.getAttribute('data-target'));
+      const isDecimal = target % 1 !== 0;
+      let count = 0;
+      const increment = target / 100;
+
+      const updateCount = () => {
+        count += increment;
+        if (count < target) {
+          counter.textContent = isDecimal ? count.toFixed(1) : Math.floor(count);
+          requestAnimationFrame(updateCount);
+        } else {
+          counter.textContent = isDecimal ? target.toFixed(1) : target;
+        }
+      };
+      updateCount();
+    });
+  }
+
+  function checkScroll() {
+    const statsSection = document.getElementById('stats-section');
+    const rect = statsSection.getBoundingClientRect();
+    if (!statsStarted && rect.top < window.innerHeight) {
+      statsStarted = true;
+      animateCounters();
+    }
+  }
+
+  window.addEventListener('scroll', checkScroll);
+</script>
+
 </body>
 </html>
