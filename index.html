@@ -46,13 +46,19 @@
       color: #333;
     }
 
-    nav {
-      background-color: #003366;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+   nav {
+  background-color: #003366;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center; /* centre horizontalement */
+  align-items: center;
+  gap: 2rem; /* espace entre les liens */
+  flex-wrap: wrap;
+}
+#mobile-menu {
+  display: none;
+}
+
 
     nav a {
       color: white;
