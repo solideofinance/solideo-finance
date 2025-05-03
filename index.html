@@ -37,6 +37,64 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       animation: fadeIn 1.5s ease-in;
     }
+    <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    nav {
+      background-color: #003366;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1.5rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-icon {
+      display: none;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      nav a {
+        display: none;
+      }
+      .menu-icon {
+        display: block;
+      }
+      .menu-active {
+        display: block;
+        position: absolute;
+        top: 4rem;
+        left: 0;
+        width: 100%;
+        background-color: #003366;
+        text-align: center;
+        padding: 1rem;
+      }
+      .menu-active a {
+        display: block;
+        margin: 1rem 0;
+      }
+    }
     h1, h2 { color: #003366; }
     .slogan { font-style: italic; color: #ccc; margin-top: -10px; }
     ul { padding-left: 1.5rem; }
@@ -217,6 +275,16 @@
     <img src="logo solideo.jpg" alt="Solideo logo">
     <h1>Solideo Finances</h1>
     <p class="slogan">« Bâtir ensemble votre avenir financier »</p>
+    <nav>
+        <!-- Icone de menu pour les petits écrans -->
+        <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+        
+        <!-- Menu mobile -->
+        <div class="menu-active" id="mobile-menu">
+          <a href="index.html">Accueil</a>
+          <a href="simulation.html">Simulation</a>
+        </div>
+      </nav>
   </header>
 
   <section>
@@ -376,10 +444,6 @@
   </div>
 </section>
 
-  <footer>
-    &copy; 2025 Solideo Finances. Tous droits réservés.
-  </footer>
-
   <script>
     const slides = document.querySelectorAll('.slides img');
     let current = 0;
@@ -507,6 +571,9 @@
   });
 </script>
 
+   <footer>
+    &copy; 2025 Solideo Finances. Tous droits réservés.
+  </footer>
 
 </body>
 </html>
