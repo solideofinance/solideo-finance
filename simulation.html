@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulation de Financement | Solideo Finances</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    nav {
+      background-color: #003366;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1.5rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-icon {
+      display: none;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      nav a {
+        display: none;
+      }
+      .menu-icon {
+        display: block;
+      }
+      .menu-active {
+        display: block;
+        position: absolute;
+        top: 4rem;
+        left: 0;
+        width: 100%;
+        background-color: #003366;
+        text-align: center;
+        padding: 1rem;
+      }
+      .menu-active a {
+        display: block;
+        margin: 1rem 0;
+      }
+    }
+    h1, h2 { color: #003366; text-align: center; }
+    section {
+      max-width: 900px;
+      margin: 2rem auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .btn {
+      padding: 0.8rem 1.5rem;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #e6f0ff;
+      border-left: 5px solid #003366;
+    }
+    .flex-toggle {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+    .flex-toggle button {
+      padding: 0.5rem 1rem;
+      background: #eee;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .flex-toggle button.active {
+      background: #003366;
+      color: white;
+    }
+
+    /* Responsive breakpoints */
+    @media screen and (max-width: 768px) {
+      section {
+        width: 100%;
+        padding: 1rem;
+      }
+      .form-group input, .form-group select {
+        padding: 0.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Solideo Finances</h1>
+    <nav>
+        <!-- Icone de menu pour les petits écrans -->
+        <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
+        
+        <!-- Menu mobile -->
+        <div class="menu-active" id="mobile-menu">
+          <a href="index.html">Accueil</a>
+          <a href="simulation.html">Simulation</a>
+        </div>
+      </nav>
+    
+      <script>
+        function toggleMenu() {
+          const menu = document.getElementById('mobile-menu');
+          menu.classList.toggle('menu-active');
+        }
+      </script>
+  </header>
+
+  <section id="simulation">
+    <h2>Simulation de Financement</h2>
+    <div class="flex-toggle">
+      <button onclick="toggleForm('classic')" id="btn-classic" class="active">Classique</button>
+      <button onclick="toggleForm('revenus')" id="btn-revenus">Sans remboursement direct</button>
+    </div>
+
+    <form id="classic-form">
+      <div class="form-group">
+        <label>Montant emprunté (€)</label>
+        <input type="number" id="amount" required>
+      </div>
+      <div class="form-group">
+        <label>Durée (en mois)</label>
+        <input type="number" id="duration" required>
+      </div>
+      <div class="form-group">
+        <label>Taux d'intérêt (%)</label>
+        <input type="number" id="rate" required>
+      </div>
+      <button type="button" class="btn" onclick="calculateLoan()">Calculer</button>
+    </form>
+
+    <form id="revenus-form" style="display:none">
+      <div class="form-group">
+        <label>Montant demandé (€)</label>
+        <input type="number" id="fund-amount">
+      </div>
+      <div class="form-group">
+        <label>Type de projet</label>
+        <select id="fund-type">
+          <option value="auto">Création entreprise</option>
+          <option value="immobilier">Projet immobilier</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>% des revenus à partager (par ex. 8%)</label>
+        <input type="number" id="revenue-share">
+      </div>
+      <button type="button" class="btn" onclick="calculateRevenueFunding()">Estimer</button>
+    </form>
+
+    <div id="result" class="result" style="display:none"></div>
+    <button id="downloadBtn" style="display:none" class="btn" onclick="downloadPDF()"><i class="fa fa-download"></i> Télécharger PDF</button>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    function toggleForm(mode) {
+      document.getElementById('classic-form').style.display = mode === 'classic' ? 'block' : 'none';
+      document.getElementById('revenus-form').style.display = mode === 'revenus' ? 'block' : 'none';
+      document.getElementById('btn-classic').classList.toggle('active', mode === 'classic');
+      document.getElementById('btn-revenus').classList.toggle('active', mode === 'revenus');
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('downloadBtn').style.display = 'none';
+    }
+
+    function calculateLoan() {
+      const amount = parseFloat(document.getElementById('amount').value);
+      const duration = parseInt(document.getElementById('duration').value);
+      const rate = parseFloat(document.getElementById('rate').value) / 100 / 12;
+
+      const mensualite = (amount * rate) / (1 - Math.pow(1 + rate, -duration));
+      const total = mensualite * duration;
+
+      const result = `Mensualité estimée : ${mensualite.toFixed(2)} €<br>Total à rembourser : ${total.toFixed(2)} €`;
+      displayResult(result);
+    }
+
+    function calculateRevenueFunding() {
+      const amount = parseFloat(document.getElementById('fund-amount').value);
+      const share = parseFloat(document.getElementById('revenue-share').value);
+      const type = document.getElementById('fund-type').value;
+
+      const estimatedTotal = amount * (1 + share / 100 * 3); // simulation grossière pour 3 ans
+      const result = `Vous devrez partager ${share}% de vos revenus pendant 3 ans.<br>Estimation de contribution totale : ${estimatedTotal.toFixed(2)} €`;
+      displayResult(result);
+    }
+
+    function displayResult(html) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = html;
+      resultDiv.style.display = 'block';
+      document.getElementById('downloadBtn').style.display = 'inline-block';
+    }
+
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.text("Simulation Solideo", 10, 10);
+      doc.text(document.getElementById('result').innerText, 10, 30);
+      doc.save("simulation-solideo.pdf");
+    }
+  </script>
+
+  <!-- SECTION STATISTIQUES AVEC GRAPHES -->
+<section>
+    <h2>Statistiques clés</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+      <div>
+        <canvas id="visitesChart"></canvas>
+      </div>
+      <div>
+        <canvas id="typesChart"></canvas>
+      </div>
+      <div>
+        <canvas id="satisfactionChart"></canvas>
+      </div>
+    </div>
+  </section>
+  
+  <!-- SCRIPTS DES GRAPHES -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Graphique 1 - Visiteurs hebdo
+    const ctx1 = document.getElementById('visitesChart').getContext('2d');
+    new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+        datasets: [{
+          label: 'Visiteurs/jour',
+          data: [120, 150, 180, 130, 200, 350, 400],
+          borderColor: '#2e6eb8',
+          backgroundColor: 'rgba(46,110,184,0.2)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        plugins: { title: { display: true, text: 'Visiteurs cette semaine' } },
+        responsive: true
+      }
+    });
+  
+    // Graphique 2 - Types de projets
+    const ctx2 = document.getElementById('typesChart').getContext('2d');
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Immobilier', 'Auto', 'Entreprise', 'Conso', 'Rachat'],
+        datasets: [{
+          label: 'Demandes',
+          data: [40, 25, 30, 15, 20],
+          backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#009879']
+        }]
+      },
+      options: {
+        plugins: { title: { display: true, text: 'Répartition des types de projets' } },
+        responsive: true
+      }
+    });
+  
+    // Graphique 3 - Satisfaction clients
+    const ctx3 = document.getElementById('satisfactionChart').getContext('2d');
+    new Chart(ctx3, {
+      type: 'doughnut',
+      data: {
+        labels: ['Très satisfait', 'Satisfait', 'Neutre', 'Mécontent'],
+        datasets: [{
+          data: [60, 25, 10, 5],
+          backgroundColor: ['#00cc99', '#66ccff', '#cccccc', '#ff6666']
+        }]
+      },
+      options: {
+        plugins: { title: { display: true, text: 'Taux de satisfaction client' } },
+        responsive: true
+      }
+    });
+  </script>
+  
+</body>
+</html>
