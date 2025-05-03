@@ -431,5 +431,82 @@
   window.addEventListener('scroll', checkScroll);
 </script>
 
+  <!-- SECTION STATISTIQUES AVEC GRAPHES -->
+<section>
+  <h2>Statistiques clés</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+    <div>
+      <canvas id="visitesChart"></canvas>
+    </div>
+    <div>
+      <canvas id="typesChart"></canvas>
+    </div>
+    <div>
+      <canvas id="satisfactionChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- SCRIPTS DES GRAPHES -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Graphique 1 - Visiteurs hebdo
+  const ctx1 = document.getElementById('visitesChart').getContext('2d');
+  new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+      datasets: [{
+        label: 'Visiteurs/jour',
+        data: [120, 150, 180, 130, 200, 350, 400],
+        borderColor: '#2e6eb8',
+        backgroundColor: 'rgba(46,110,184,0.2)',
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      plugins: { title: { display: true, text: 'Visiteurs cette semaine' } },
+      responsive: true
+    }
+  });
+
+  // Graphique 2 - Types de projets
+  const ctx2 = document.getElementById('typesChart').getContext('2d');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Immobilier', 'Auto', 'Entreprise', 'Conso', 'Rachat'],
+      datasets: [{
+        label: 'Demandes',
+        data: [40, 25, 30, 15, 20],
+        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#009879']
+      }]
+    },
+    options: {
+      plugins: { title: { display: true, text: 'Répartition des types de projets' } },
+      responsive: true
+    }
+  });
+
+  // Graphique 3 - Satisfaction clients
+  const ctx3 = document.getElementById('satisfactionChart').getContext('2d');
+  new Chart(ctx3, {
+    type: 'doughnut',
+    data: {
+      labels: ['Très satisfait', 'Satisfait', 'Neutre', 'Mécontent'],
+      datasets: [{
+        data: [60, 25, 10, 5],
+        backgroundColor: ['#00cc99', '#66ccff', '#cccccc', '#ff6666']
+      }]
+    },
+    options: {
+      plugins: { title: { display: true, text: 'Taux de satisfaction client' } },
+      responsive: true
+    }
+  });
+</script>
+
+
 </body>
 </html>
