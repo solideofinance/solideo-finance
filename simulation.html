@@ -62,20 +62,9 @@ header img {
     nav a:hover {
       text-decoration: underline;
     }
-
-    .menu-icon {
-      display: none;
-      font-size: 2rem;
-      color: white;
-      cursor: pointer;
-    }
-
     @media (max-width: 768px) {
       nav a {
         display: none;
-      }
-      .menu-icon {
-        display: block;
       }
       .menu-active {
         display: block;
@@ -170,9 +159,6 @@ header img {
     <h1>Solideo Finances</h1>
     <p class="slogan">« Bâtir ensemble votre avenir financier »</p>
     <nav>
-        <!-- Icone de menu pour les petits écrans -->
-        <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
-        
         <!-- Menu mobile -->
         <div class="menu-active" id="mobile-menu">
           <a href="index.html">Accueil</a>
