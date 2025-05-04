@@ -33,7 +33,6 @@ header img {
       text-decoration: none;
       font-weight: bold;
     }
-    <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -133,6 +132,22 @@ header img {
       background: #003366;
       color: white;
     }
+    .slogan {
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+#mobile-menu {
+  display: none; /* caché par défaut */
+}
+
+@media (max-width: 768px) {
+  #mobile-menu {
+    display: block;
+  }
+}
+
 
     /* Responsive breakpoints */
     @media screen and (max-width: 768px) {
@@ -143,14 +158,14 @@ header img {
       .form-group input, .form-group select {
         padding: 0.6rem;
       }
-      footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: #eeeeee;
-      font-size: 0.9rem;
     }
+    footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #eeeeee;
+  font-size: 0.9rem;
+}
 
-    }
   </style>
 </head>
 <body>
@@ -166,7 +181,7 @@ header img {
         </div>
       </nav>
   </header>
-
+  <img id="pdf-logo" src="logo solideo.jpg" style="display:none;" />
   <section id="simulation">
     <h2>Simulation de Financement</h2>
     <div class="flex-toggle">
@@ -255,11 +270,57 @@ header img {
     }
 
     async function downloadPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      doc.text("Simulation Solideo", 10, 10);
-      doc.text(document.getElementById('result').innerText, 10, 30);
-      doc.save("simulation-solideo.pdf");
+      async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const logo = document.getElementById("pdf-logo");
+  const resultText = document.getElementById("result").innerText;
+
+  // Ajout du logo
+  const imgData = await toDataURL(logo.src);
+  doc.addImage(imgData, 'JPEG', 10, 10, 30, 30);
+
+  // Titre et couleurs
+  doc.setFontSize(18);
+  doc.setTextColor(0, 51, 102);
+  doc.text("Simulation de financement", 50, 20);
+
+  doc.setFontSize(12);
+  doc.setTextColor(0);
+  doc.text("Solideo Finances — Bâtir ensemble votre avenir financier", 50, 28);
+
+  doc.setLineWidth(0.5);
+  doc.setDrawColor(0, 51, 102);
+  doc.line(10, 45, 200, 45);
+
+  // Résultat
+  doc.setFontSize(14);
+  doc.setTextColor(0);
+  const lines = doc.splitTextToSize(resultText, 180);
+  doc.text("Résultat de votre simulation :", 10, 55);
+  doc.text(lines, 10, 65);
+
+  // Message de remerciement
+  doc.setFontSize(12);
+  doc.setTextColor(0, 102, 0);
+  doc.text("Merci pour votre confiance !", 10, doc.internal.pageSize.height - 20);
+  doc.text("Solideo Finances", 10, doc.internal.pageSize.height - 15);
+
+  doc.save("simulation-solideo.pdf");
+}
+
+// Convertir une image en base64
+function toDataURL(url) {
+  return fetch(url)
+    .then(response => response.blob())
+    .then(blob => new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    }));
+}
+
     }
   </script>
 
