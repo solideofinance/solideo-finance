@@ -15,13 +15,18 @@
       color: #333;
     }
     header {
-      background-color: #003366;
-      color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  background-color: #003366;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+header img {
+  width: 80px;
+  display: block;
+  margin: 0 auto 1rem;
+  animation: popIn 1s ease-out;
+}
+
     header nav a {
       color: white;
       margin-left: 1.5rem;
@@ -161,7 +166,9 @@
 </head>
 <body>
   <header>
+    <img src="logo solideo.jpg" alt="Solideo logo">
     <h1>Solideo Finances</h1>
+    <p class="slogan">« Bâtir ensemble votre avenir financier »</p>
     <nav>
         <!-- Icone de menu pour les petits écrans -->
         <span class="menu-icon" onclick="toggleMenu()">&#9776;</span>
@@ -172,13 +179,6 @@
           <a href="simulation.html">Simulation</a>
         </div>
       </nav>
-    
-      <script>
-        function toggleMenu() {
-          const menu = document.getElementById('mobile-menu');
-          menu.classList.toggle('menu-active');
-        }
-      </script>
   </header>
 
   <section id="simulation">
