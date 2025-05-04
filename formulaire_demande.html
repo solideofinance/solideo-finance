@@ -431,7 +431,7 @@
 
     <script>
         // Initialisation d'EmailJS (remplacez par vos identifiants)
-        emailjs.init('YOUR_USER_ID'); // À remplacer par votre User ID EmailJS
+        emailjs.init(service_i29hgy5); // À remplacer par votre User ID EmailJS
         
         // Affichage des noms de fichiers sélectionnés
         document.getElementById('piece_identite').addEventListener('change', function(e) {
@@ -492,7 +492,7 @@
             });
             
             // Envoyer les données via EmailJS
-            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formObject) // À remplacer par vos IDs
+            emailjs.send(service_i29hgy5, template_sjjwquk, formObject) // À remplacer par vos IDs
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
                     document.getElementById('loading').style.display = 'none';
