@@ -37,7 +37,6 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       animation: fadeIn 1.5s ease-in;
     }
-    <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -270,11 +269,20 @@
       .slider { height: 250px; }
     }
   </style>
+  <script>
+    const userLang = navigator.language.slice(0, 2);
+    fetch(`lang/${userLang}.json`).then(res => res.json()).then(dict => {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = dict[key] || key;
+      });
+    }).catch(() => {});
+  </script>
 </head>
 <body>
   <header>
     <img src="logo solideo.jpg" alt="Solideo logo">
-    <h1>Solideo Finances</h1>
+    <h1 data-i18n="welcome">Solideo Finances</h1>
     <p class="slogan">« Bâtir ensemble votre avenir financier »</p>
     <nav>
         <!-- Menu mobile -->
@@ -287,7 +295,7 @@
   </header>
 
   <section>
-    <h2>Qui sommes-nous ?</h2>
+    <h2 data-i18n="Qui sommes-nous">Qui sommes-nous ?</h2>
     <div class="slider">
       <div class="slides">
         <img src="BPIMACRON.jpg" alt="Agence de financement" class="active">
@@ -297,12 +305,12 @@
         <img src="PT5.jpg" alt="Financement projet">
       </div>
     </div>
-    <p>Solideo Finances est une agence de financement innovante et humaine, implantée en France, qui accompagne les particuliers, indépendants et petites entreprises dans la réalisation de leurs projets financiers.</p>
-    <p>Notre objectif : apporter des solutions accessibles, sur-mesure et 100% transparentes.</p>
+    <p data-i18n="description">Solideo Finances est une agence de financement innovante et humaine, implantée en France, qui accompagne les particuliers, indépendants et petites entreprises dans la réalisation de leurs projets financiers.</p>
+    <p data-i18n="description">Notre objectif : apporter des solutions accessibles, sur-mesure et 100% transparentes.</p>
   </section>
 
   <section>
-    <h2>Nos 3 piliers</h2>
+    <h2 data-i18n="Nos piliers">Nos 3 piliers</h2>
     <h3>1. Accompagnement personnalisé et humain</h3>
     <p>Chez Solideo Finances, chaque client est unique. Nos conseillers financiers sont formés pour écouter, comprendre et orienter chacun vers la solution la plus adaptée à sa situation.</p>
     <h3>2. Transparence & pédagogie financière</h3>
@@ -311,7 +319,7 @@
     <p>Grâce à notre réseau de partenaires bancaires, nous proposons des offres variées et flexibles, même en cas de refus bancaire initial.</p>
   </section>
   <section>
-  <h2>Nos services en détail</h2>
+  <h2 data-i18n="services">Nos services en détail</h2>
   <div style="display: flex; flex-direction: column; gap: 2rem; line-height: 1.6;">
 
     <div style="background-color: #e8f0ff; padding: 1.5rem; border-radius: 10px;">
@@ -323,59 +331,56 @@
     </div>
 
     <div style="background-color: #fef3e2; padding: 1.5rem; border-radius: 10px;">
-      <h3>🏡 Financement immobilier</h3>
-      <p>
+      <h3 data-i18n="Financement">🏡 Financement immobilier</h3>
+      <p data-i18n="description">
         Que vous soyez primo-accédant ou investisseur, Solideo Finances vous accompagne dans toutes les étapes de votre projet immobilier. Nous étudions votre dossier, simulons vos capacités d’emprunt, puis recherchons le financement optimal auprès de nos partenaires. 
         Notre accompagnement comprend également les assurances emprunteur, les frais de notaire, et des conseils pour sécuriser votre achat. Avec nous, vous bénéficiez d’un accompagnement humain et professionnel du début à la fin.
       </p>
     </div>
 
     <div style="background-color: #e5f7ec; padding: 1.5rem; border-radius: 10px;">
-      <h3>🚗 Crédit à la consommation</h3>
-      <p>
+      <h3 data-i18n="Welcome">🚗 Crédit à la consommation</h3>
+      <p data-i18n="description">
         Un besoin urgent de trésorerie ? Un projet personnel ou l’achat d’un véhicule ? Nos solutions de crédit à la consommation vous permettent d’obtenir rapidement les fonds nécessaires, avec des conditions claires et flexibles. 
         Chez Solideo, nous vous expliquons chaque étape, les taux pratiqués et les implications. Notre objectif : vous permettre d’avancer sereinement, sans piège ni pression.
       </p>
     </div>
 
     <div style="background-color: #f3e9f9; padding: 1.5rem; border-radius: 10px;">
-      <h3>👨‍💼 Accompagnement des indépendants</h3>
-      <p>
+      <h3 data-i18n="Welcome">👨‍💼 Accompagnement des indépendants</h3>
+      <p data-i18n="description">
         Vous êtes freelance, artisan ou profession libérale ? Vos revenus irréguliers ne doivent pas être un frein à vos projets. Nous avons mis en place un accompagnement spécifique pour les indépendants, avec des solutions adaptées à leur réalité. 
         Nous vous aidons à constituer un dossier solide, à valoriser vos revenus, et à trouver des financements auprès de banques qui comprennent les spécificités de votre activité. 
       </p>
     </div>
 
     <div style="background-color: #fff3f3; padding: 1.5rem; border-radius: 10px;">
-      <h3>📈 Conseil en gestion budgétaire</h3>
-      <p>
+      <h3 data-i18n="Welcome">📈 Conseil en gestion budgétaire</h3>
+      <p data-i18n="description">
         Bien gérer son budget, c’est la base d’un avenir financier stable. C’est pourquoi nous proposons un service de conseil personnalisé : nous analysons ensemble vos revenus, dépenses, habitudes de consommation, et mettons en place un plan d’action simple. 
         Que vous souhaitiez épargner, investir ou simplement mieux gérer votre quotidien, nos conseillers sont là pour vous orienter avec pédagogie et bienveillance.
       </p>
     </div>
 
   </div>
+  <div class="slider">
+    <div class="slides">
+      <img src="bpi1.jpg" alt="Agence de financement" class="active">
+      <img src="BPI3.jpg" alt="Offre financeme32700_960_720.jpgnt">
+      <img src="BPI4.jpg" alt="Financement projet">
+      <img src="BPI5.jpg" alt="Financement projet">
+      <img src="BPI6.jpg" alt="Financement projet">
+    </div>
+  </div>
 </section>
 
-
-  
-  <div class="slider">
-      <div class="slides">
-        <img src="bpi1.jpg" alt="Agence de financement" class="active">
-        <img src="BPI3.jpg" alt="Offre financeme32700_960_720.jpgnt">
-        <img src="BPI4.jpg" alt="Financement projet">
-        <img src="BPI5.jpg" alt="Financement projet">
-        <img src="BPI6.jpg" alt="Financement projet">
-      </div>
-    </div>
-
 <section>
-  <h2>Témoignages clients</h2>
+  <h2 data-i18n="Welcome">Témoignages clients</h2>
 
   <div class="testimonial">
     <img src="témoingarcon.jpg" alt="Karim T." class="testimonial-photo">
     <blockquote>
-      <p>"J'étais perdu avec mes dettes jusqu'à ce que Solideo me guide pas à pas. Aujourd'hui, je respire financièrement."</p>
+      <p data-i18n="description">"J'étais perdu avec mes dettes jusqu'à ce que Solideo me guide pas à pas. Aujourd'hui, je respire financièrement."</p>
       <footer>– Karim T., 34 ans, auto-entrepreneur à Marseille</footer>
     </blockquote>
   </div>
@@ -383,7 +388,7 @@
   <div class="testimonial">
     <img src="témoinfille.jpg" alt="Léa D." class="testimonial-photo">
     <blockquote>
-      <p>"Grâce à Solideo, j’ai obtenu un crédit immo en 15 jours. Équipe super réactive et humaine !"</p>
+      <p data-i18n="description">"Grâce à Solideo, j’ai obtenu un crédit immo en 15 jours. Équipe super réactive et humaine !"</p>
       <footer>– Léa D., 28 ans, infirmière à Lyon</footer>
     </blockquote>
   </div>
@@ -400,8 +405,8 @@
 
 
   <section>
-    <h2>Offre de lancement</h2>
-    <p>Pour toute première demande de financement réalisée avant le 30 juin, bénéficiez de :</p>
+    <h2 data-i18n="welcome">Offre de lancement</h2>
+    <p data-i18n="Welcome">Pour toute première demande de financement réalisée avant le 30 juin, bénéficiez de :</p>
     <ul>
       <li>Une simulation gratuite et détaillée</li>
       <li>Des frais de dossier réduits de 50%</li>
@@ -410,7 +415,7 @@
   </section>
 
   <section>
-    <h2>Contact</h2>
+    <h2 data-i18n="welcome">Contact</h2>
     <p><strong>Site web :</strong> www.solideo-finances.fr</p>
     <p><strong>Whatsapp :</strong> 07 56 82 39 16</p>
     <p><strong>Email :</strong> solideofinance@gmail.com</p>
@@ -418,27 +423,27 @@
   </section>
 
 <section id="stats-section" class="stats-modern">
-  <h2>Nos chiffres clés</h2>
+  <h2 data-i18n="description">Nos chiffres clés</h2>
   <div class="stats-grid">
     <div class="stat-box">
       <span class="icon">👥</span>
       <h3 data-target="25000">0</h3>
-      <p>Visiteurs uniques</p>
+      <p data-i18n="description">Visiteurs uniques</p>
     </div>
     <div class="stat-box">
       <span class="icon">🌟</span>
       <h3 data-target="98">0</h3>
-      <p>Clients satisfaits (%)</p>
+      <p data-i18n="description">Clients satisfaits (%)</p>
     </div>
     <div class="stat-box">
       <span class="icon">💼</span>
       <h3 data-target="350">0</h3>
-      <p>Dossiers financés</p>
+      <p data-i18n="description">Dossiers financés</p>
     </div>
     <div class="stat-box">
       <span class="icon">⭐</span>
       <h3 data-target="4.9">0</h3>
-      <p>Note moyenne</p>
+      <p data-i18n="description">Note moyenne</p>
     </div>
   </div>
 </section>
@@ -497,6 +502,9 @@
    <footer>
     &copy; 2025 Solideo Finances. Tous droits réservés.
   </footer>
-
+  <script src="js/lang.js"></script>
+  <script>
+    loadLanguage(); // Fonction qui détecte et charge la langue
+  </script>
 </body>
 </html>
