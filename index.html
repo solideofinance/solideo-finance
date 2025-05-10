@@ -498,13 +498,13 @@
 
   window.addEventListener('scroll', checkScroll);
 </script>
-
+function setLanguage(lang) {
+    localStorage.setItem("userLang", lang);
+    location.reload();
+}
+const savedLang = localStorage.getItem("userLang") || navigator.language;
    <footer>
     &copy; 2025 Solideo Finances. Tous droits réservés.
   </footer>
-  <script src="js/lang.js"></script>
-  <script>
-    loadLanguage(); // Fonction qui détecte et charge la langue
-  </script>
 </body>
 </html>
