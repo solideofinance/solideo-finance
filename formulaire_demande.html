@@ -4,12 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demande de Financement | Solideo Finances</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
     <style>
         :root {
-            --primary: #003366;
-            --secondary: #f4f4f4;
+            --primary: #0a2540;
+            --primary-light: #1a3a5f;
+            --primary-dark: #051a30;
+            --secondary: #c8a45c;
+            --secondary-light: #d9bc7d;
+            --secondary-dark: #b08d3e;
+            --accent: #e6f0ff;
+            --text: #333333;
+            --text-light: #666666;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --dark: #1a1a1a;
             --error: #e74c3c;
+            --success: #27ae60;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-strong: 0 15px 35px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
+            --radius-sm: 6px;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         
         * {
@@ -19,46 +38,143 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background-color: var(--secondary);
-            color: #333;
-            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.7;
+            background-color: var(--light);
+            color: var(--text);
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--white);
+            padding: 100px 0 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .page-header .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
         }
         
         .container {
-            max-width: 900px;
-            margin: 30px auto;
-            background: white;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+        
+        .form-container {
+            margin: -50px auto 80px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-strong);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            color: var(--white);
+            position: relative;
         }
         
-        h1 {
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 28px;
+        .form-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--secondary-light));
         }
         
-        h2 {
-            color: var(--primary);
-            font-size: 22px;
-            margin: 30px 0 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--primary);
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .form-description {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .form-body {
+            padding: 40px;
         }
         
         .form-section {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
+            margin-bottom: 40px;
+            position: relative;
         }
         
-        .form-group {
-            margin-bottom: 20px;
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 15px;
+            box-shadow: 0 4px 10px rgba(10, 37, 64, 0.2);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 0;
+        }
+        
+        .section-content {
+            background: var(--light);
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
         
         .form-row {
@@ -67,8 +183,16 @@
             margin-bottom: 20px;
         }
         
-        .form-row .form-group {
+        .form-group {
             flex: 1;
+            margin-bottom: 20px;
+        }
+        
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-group:last-child {
             margin-bottom: 0;
         }
         
@@ -76,9 +200,11 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
         }
         
-        .required label:after {
+        .required label::after {
             content: " *";
             color: var(--error);
         }
@@ -91,37 +217,63 @@
         select,
         textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border 0.3s;
+            padding: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+            background-color: var(--white);
         }
         
         input:focus,
         select:focus,
         textarea:focus {
-            border-color: var(--primary);
+            border-color: var(--secondary);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(0, 51, 102, 0.2);
+            box-shadow: 0 0 0 3px rgba(200, 164, 92, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230a2540' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 40px;
         }
         
         .file-upload {
             margin-top: 10px;
         }
         
-        .file-upload label {
-            display: inline-flex;
+        .file-upload-label {
+            display: flex;
             align-items: center;
-            padding: 10px 15px;
-            background-color: #f0f0f0;
-            border-radius: 6px;
+            padding: 14px;
+            background-color: var(--accent);
+            border: 1px dashed var(--primary-light);
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: background 0.3s;
+            transition: var(--transition);
+            color: var(--primary);
+            font-weight: 500;
         }
         
-        .file-upload label:hover {
-            background-color: #e0e0e0;
+        .file-upload-label:hover {
+            background-color: rgba(230, 240, 255, 0.7);
+            border-color: var(--secondary);
+        }
+        
+        .file-upload-label i {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            color: var(--secondary);
         }
         
         .file-upload input[type="file"] {
@@ -130,308 +282,909 @@
         
         .file-name {
             margin-left: 10px;
-            font-size: 14px;
-            color: #666;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .file-info i {
+            margin-right: 5px;
+            color: var(--primary-light);
+        }
+        
+        .consent-container {
+            margin-top: 40px;
+            padding: 25px;
+            background-color: rgba(230, 240, 255, 0.5);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .consent-checkbox {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .consent-checkbox input[type="checkbox"] {
+            margin-top: 5px;
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--secondary);
+        }
+        
+        .consent-checkbox label {
+            margin: 0;
+            font-weight: 500;
+            line-height: 1.5;
         }
         
         .btn-submit {
             display: block;
             width: 100%;
-            max-width: 300px;
+            max-width: 350px;
             margin: 40px auto 0;
-            padding: 15px;
-            background-color: var(--primary);
-            color: white;
+            padding: 16px 30px;
+            background: linear-gradient(to right, var(--secondary), var(--secondary-light));
+            color: var(--primary-dark);
             border: none;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: 600;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(200, 164, 92, 0.3);
+        }
+        
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary);
+            transition: var(--transition);
+            z-index: -1;
         }
         
         .btn-submit:hover {
-            background-color: #002244;
-            transform: translateY(-2px);
+            color: var(--white);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(200, 164, 92, 0.4);
         }
         
-        .btn-submit:active {
-            transform: translateY(0);
+        .btn-submit:hover::before {
+            width: 100%;
         }
         
         .loading {
             display: none;
             text-align: center;
-            margin: 20px 0;
+            margin: 30px 0;
         }
         
         .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(200, 164, 92, 0.3);
             border-radius: 50%;
-            border-top: 4px solid var(--primary);
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
+            border-top-color: var(--secondary);
+            animation: spin 1s ease-in-out infinite;
         }
         
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 15px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            border-radius: var(--radius);
+            margin: 30px 0;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .success-message {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background-color: #d4edda;
-            color: #155724;
-            border-radius: 6px;
-            margin-top: 20px;
+            background-color: rgba(39, 174, 96, 0.1);
+            border-left: 4px solid var(--success);
+        }
+        
+        .success-message h3 {
+            color: var(--success);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .success-message p {
+            color: var(--text);
         }
         
         .error-message {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--error);
+        }
+        
+        .error-message h3 {
+            color: var(--error);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .error-message p {
+            color: var(--text);
+        }
+        
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            padding: 20px 0;
+            background: rgba(10, 37, 64, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            transition: var(--transition);
+        }
+        
+        .logo-text {
+            color: var(--white);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 8px 0;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-cta {
+            background: var(--secondary);
+            color: var(--primary-dark) !important;
+            padding: 10px 20px !important;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(200, 164, 92, 0.3);
+            transition: var(--transition);
+        }
+        
+        .nav-cta:hover {
+            background: var(--secondary-light);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(200, 164, 92, 0.4);
+        }
+        
+        .nav-cta::after {
             display: none;
-            text-align: center;
-            padding: 20px;
-            background-color: #f8d7da;
-            color: #721c24;
-            border-radius: 6px;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 80px 0 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary), var(--primary));
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h4 {
+            color: var(--white);
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+        
+        .footer-about img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-about p {
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+        
+        .footer-links a i {
+            font-size: 0.8rem;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .footer-contact i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-top: 3px;
+        }
+        
+        .footer-newsletter p {
+            margin-bottom: 20px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+        
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+        
+        .newsletter-button {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            border: none;
+            padding: 12px 15px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-button:hover {
+            background: var(--secondary-light);
+            transform: translateY(-3px);
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
             margin-top: 20px;
         }
         
-        @media (max-width: 768px) {
-            .form-row {
-                flex-direction: column;
-                gap: 0;
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .social-icon:hover {
+            background: var(--secondary);
+            color: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .page-title {
+                font-size: 2.5rem;
             }
             
-            .container {
+            .form-body {
+                padding: 30px;
+            }
+            
+            nav ul {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(10, 37, 64, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                z-index: 1000;
+                transition: var(--transition);
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav a {
+                font-size: 1.2rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .form-body {
                 padding: 20px;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .page-header {
+                padding: 80px 0 40px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .form-header {
+                padding: 20px;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .btn-submit {
+                max-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Formulaire de Demande de Financement</h1>
-        
-        <form id="financeForm">
-            <!-- Section 1: Informations personnelles -->
-            <div class="form-section">
-                <h2>1. Informations personnelles</h2>
-                
-                <div class="form-row">
-                    <div class="form-group required">
-                        <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" required>
-                    </div>
-                    <div class="form-group required">
-                        <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group required">
-                        <label for="date_naissance">Date de naissance</label>
-                        <input type="date" id="date_naissance" name="date_naissance" required>
-                    </div>
-                    <div class="form-group required">
-                        <label for="lieu_naissance">Lieu de naissance</label>
-                        <input type="text" id="lieu_naissance" name="lieu_naissance" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group required">
-                        <label for="nationalite">Nationalité</label>
-                        <input type="text" id="nationalite" name="nationalite" required>
-                    </div>
-                    <div class="form-group required">
-                        <label for="situation_familiale">Situation familiale</label>
-                        <select id="situation_familiale" name="situation_familiale" required>
-                            <option value="">-- Sélectionnez --</option>
-                            <option value="celibataire">Célibataire</option>
-                            <option value="marie">Marié(e)</option>
-                            <option value="divorce">Divorcé(e)</option>
-                            <option value="veuf">Veuf/Veuve</option>
-                            <option value="concubinage">Concubinage</option>
-                            <option value="pacs">PACS</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="enfants_charge">Nombre d'enfants à charge</label>
-                    <input type="number" id="enfants_charge" name="enfants_charge" min="0" value="0">
-                </div>
-                
-                <div class="form-group required">
-                    <label for="adresse">Adresse complète</label>
-                    <textarea id="adresse" name="adresse" rows="3" required></textarea>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group required">
-                        <label for="telephone">Téléphone portable</label>
-                        <input type="tel" id="telephone" name="telephone" required>
-                    </div>
-                    <div class="form-group required">
-                        <label for="email">Adresse e-mail</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group required">
-                        <label for="profession">Profession actuelle</label>
-                        <input type="text" id="profession" name="profession" required>
-                    </div>
-                    <div class="form-group required">
-                        <label for="revenus_mensuels">Revenus mensuels nets (€)</label>
-                        <input type="number" id="revenus_mensuels" name="revenus_mensuels" step="0.01" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="charges_mensuelles">Charges mensuelles (loyer, crédits, pensions...)</label>
-                    <textarea id="charges_mensuelles" name="charges_mensuelles" rows="2"></textarea>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group required">
-                        <label for="banque">Nom de votre banque</label>
-                        <input type="text" id="banque" name="banque" required>
-                    </div>
-                    <div class="form-group required">
-                        <label for="type_compte">Type de compte</label>
-                        <select id="type_compte" name="type_compte" required>
-                            <option value="">-- Sélectionnez --</option>
-                            <option value="compte_courant">Compte courant</option>
-                            <option value="compte_epargne">Compte épargne</option>
-                            <option value="compte_joint">Compte joint</option>
-                            <option value="compte_pro">Compte professionnel</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Section 2: Pièces d'identité -->
-            <div class="form-section">
-                <h2>2. Pièces d'identité à fournir</h2>
-                
-                <div class="form-group required">
-                    <label>Pièce d'identité (CNI ou passeport recto-verso)</label>
-                    <div class="file-upload">
-                        <label for="piece_identite">
-                            <i class="fas fa-upload"></i> Choisir un fichier
-                            <span id="piece-identite-name" class="file-name">Aucun fichier sélectionné</span>
-                        </label>
-                        <input type="file" id="piece_identite" name="piece_identite" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>
-                </div>
-                
-                <div class="form-group required">
-                    <label>Justificatif de domicile (moins de 3 mois)</label>
-                    <div class="file-upload">
-                        <label for="justificatif_domicile">
-                            <i class="fas fa-upload"></i> Choisir un fichier
-                            <span id="justificatif-domicile-name" class="file-name">Aucun fichier sélectionné</span>
-                        </label>
-                        <input type="file" id="justificatif_domicile" name="justificatif_domicile" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Titre de séjour (pour les étrangers résidents en France)</label>
-                    <div class="file-upload">
-                        <label for="titre_sejour">
-                            <i class="fas fa-upload"></i> Choisir un fichier
-                            <span id="titre-sejour-name" class="file-name">Aucun fichier sélectionné</span>
-                        </label>
-                        <input type="file" id="titre_sejour" name="titre_sejour" accept=".pdf,.jpg,.jpeg,.png">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Section 3: Documents justificatifs -->
-            <div class="form-section">
-                <h2>3. Documents justificatifs requis</h2>
-                
-                <div class="form-group required">
-                    <label>Bulletins de salaire (3 derniers mois)</label>
-                    <div class="file-upload">
-                        <label for="bulletins_salaire">
-                            <i class="fas fa-upload"></i> Choisir des fichiers
-                            <span id="bulletins-salaire-name" class="file-name">Aucun fichier sélectionné</span>
-                        </label>
-                        <input type="file" id="bulletins_salaire" name="bulletins_salaire" accept=".pdf,.jpg,.jpeg,.png" multiple required>
-                    </div>
-                </div>
-                
-                <div class="form-group required">
-                    <label>Relevés bancaires (3 derniers mois)</label>
-                    <div class="file-upload">
-                        <label for="releves_bancaires">
-                            <i class="fas fa-upload"></i> Choisir des fichiers
-                            <span id="releves-bancaires-name" class="file-name">Aucun fichier sélectionné</span>
-                        </label>
-                        <input type="file" id="releves_bancaires" name="releves_bancaires" accept=".pdf,.jpg,.jpeg,.png" multiple required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Factures ou devis (si financement d'un projet spécifique)</label>
-                    <div class="file-upload">
-                        <label for="factures_devis">
-                            <i class="fas fa-upload"></i> Choisir des fichiers
-                            <span id="factures-devis-name" class="file-name">Aucun fichier sélectionné</span>
-                        </label>
-                        <input type="file" id="factures_devis" name="factures_devis" accept=".pdf,.jpg,.jpeg,.png" multiple>
-                    </div>
-                </div>
-                
-                <div class="form-group required">
-                    <label>Relevé d'identité bancaire (RIB)</label>
-                    <div class="file-upload">
-                        <label for="rib">
-                            <i class="fas fa-upload"></i> Choisir un fichier
-                            <span id="rib-name" class="file-name">Aucun fichier sélectionné</span>
-                        </label>
-                        <input type="file" id="rib" name="rib" accept=".pdf,.jpg,.jpeg,.png" required>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Consentement -->
-            <div class="form-group required" style="margin-top: 30px;">
-                <input type="checkbox" id="consentement" name="consentement" required>
-                <label for="consentement">J'autorise Solideo Finances à utiliser mes données pour le traitement de ma demande conformément à la politique de confidentialité</label>
-            </div>
-            
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Envoi en cours...</p>
-            </div>
-            
-            <div class="success-message" id="successMessage">
-                <h3>Merci pour votre demande !</h3>
-                <p>Votre formulaire a bien été envoyé. Nous vous contacterons dans les plus brefs délais.</p>
-            </div>
-            
-            <div class="error-message" id="errorMessage">
-                <h3>Une erreur est survenue</h3>
-                <p id="errorText">Veuillez réessayer ou nous contacter directement.</p>
-            </div>
-            
-            <button type="submit" class="btn-submit">Soumettre ma demande</button>
-        </form>
+    <!-- Header & Navigation -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="logo-solideo.jpg" alt="Solideo Finances">
+                <span class="logo-text">Solideo Finances</span>
+            </a>
+            <nav>
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="nav-menu">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="index.html#about">À propos</a></li>
+                    <li><a href="index.html#services">Services</a></li>
+                    <li><a href="index.html#testimonials">Témoignages</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                    <li><a href="simulation.html" class="nav-cta">Simulation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title" data-aos="fade-up">Demande de Financement</h1>
+            <p class="page-subtitle" data-aos="fade-up" data-aos-delay="200">Complétez ce formulaire pour soumettre votre demande de financement et bénéficier d'un accompagnement personnalisé</p>
+        </div>
     </div>
 
+    <!-- Form Container -->
+    <div class="container">
+        <div class="form-container" data-aos="fade-up" data-aos-delay="300">
+            <div class="form-header">
+                <h2 class="form-title">Formulaire de demande</h2>
+                <p class="form-description">Tous les champs marqués d'un astérisque (*) sont obligatoires</p>
+            </div>
+            
+            <div class="form-body">
+                <form id="financeForm">
+                    <!-- Section 1: Informations personnelles -->
+                    <div class="form-section" data-aos="fade-up">
+                        <div class="section-header">
+                            <div class="section-number">1</div>
+                            <h2 class="section-title">Informations personnelles</h2>
+                        </div>
+                        
+                        <div class="section-content">
+                            <div class="form-row">
+                                <div class="form-group required">
+                                    <label for="nom">Nom</label>
+                                    <input type="text" id="nom" name="nom" required>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="prenom">Prénom</label>
+                                    <input type="text" id="prenom" name="prenom" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group required">
+                                    <label for="date_naissance">Date de naissance</label>
+                                    <input type="date" id="date_naissance" name="date_naissance" required>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="lieu_naissance">Lieu de naissance</label>
+                                    <input type="text" id="lieu_naissance" name="lieu_naissance" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group required">
+                                    <label for="nationalite">Nationalité</label>
+                                    <input type="text" id="nationalite" name="nationalite" required>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="situation_familiale">Situation familiale</label>
+                                    <select id="situation_familiale" name="situation_familiale" required>
+                                        <option value="">-- Sélectionnez --</option>
+                                        <option value="celibataire">Célibataire</option>
+                                        <option value="marie">Marié(e)</option>
+                                        <option value="divorce">Divorcé(e)</option>
+                                        <option value="veuf">Veuf/Veuve</option>
+                                        <option value="concubinage">Concubinage</option>
+                                        <option value="pacs">PACS</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="enfants_charge">Nombre d'enfants à charge</label>
+                                <input type="number" id="enfants_charge" name="enfants_charge" min="0" value="0">
+                            </div>
+                            
+                            <div class="form-group required">
+                                <label for="adresse">Adresse complète</label>
+                                <textarea id="adresse" name="adresse" rows="3" required></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group required">
+                                    <label for="telephone">Téléphone portable</label>
+                                    <input type="tel" id="telephone" name="telephone" required>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="email">Adresse e-mail</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group required">
+                                    <label for="profession">Profession actuelle</label>
+                                    <input type="text" id="profession" name="profession" required>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="revenus_mensuels">Revenus mensuels nets (€)</label>
+                                    <input type="number" id="revenus_mensuels" name="revenus_mensuels" step="0.01" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="charges_mensuelles">Charges mensuelles (loyer, crédits, pensions...)</label>
+                                <textarea id="charges_mensuelles" name="charges_mensuelles" rows="2"></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group required">
+                                    <label for="banque">Nom de votre banque</label>
+                                    <input type="text" id="banque" name="banque" required>
+                                </div>
+                                <div class="form-group required">
+                                    <label for="type_compte">Type de compte</label>
+                                    <select id="type_compte" name="type_compte" required>
+                                        <option value="">-- Sélectionnez --</option>
+                                        <option value="compte_courant">Compte courant</option>
+                                        <option value="compte_epargne">Compte épargne</option>
+                                        <option value="compte_joint">Compte joint</option>
+                                        <option value="compte_pro">Compte professionnel</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 2: Pièces d'identité -->
+                    <div class="form-section" data-aos="fade-up">
+                        <div class="section-header">
+                            <div class="section-number">2</div>
+                            <h2 class="section-title">Pièces d'identité à fournir</h2>
+                        </div>
+                        
+                        <div class="section-content">
+                            <div class="form-group required">
+                                <label>Pièce d'identité (CNI ou passeport recto-verso)</label>
+                                <div class="file-upload">
+                                    <label for="piece_identite" class="file-upload-label">
+                                        <i class="fas fa-id-card"></i> Choisir un fichier
+                                        <span id="piece-identite-name" class="file-name">Aucun fichier sélectionné</span>
+                                    </label>
+                                    <input type="file" id="piece_identite" name="piece_identite" accept=".pdf,.jpg,.jpeg,.png" required>
+                                </div>
+                                <div class="file-info">
+                                    <i class="fas fa-info-circle"></i> Formats acceptés: PDF, JPG, PNG
+                                </div>
+                            </div>
+                            
+                            <div class="form-group required">
+                                <label>Justificatif de domicile (moins de 3 mois)</label>
+                                <div class="file-upload">
+                                    <label for="justificatif_domicile" class="file-upload-label">
+                                        <i class="fas fa-home"></i> Choisir un fichier
+                                        <span id="justificatif-domicile-name" class="file-name">Aucun fichier sélectionné</span>
+                                    </label>
+                                    <input type="file" id="justificatif_domicile" name="justificatif_domicile" accept=".pdf,.jpg,.jpeg,.png" required>
+                                </div>
+                                <div class="file-info">
+                                    <i class="fas fa-info-circle"></i> Facture d'électricité, gaz, téléphone fixe, quittance de loyer...
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Titre de séjour (pour les étrangers résidents en France)</label>
+                                <div class="file-upload">
+                                    <label for="titre_sejour" class="file-upload-label">
+                                        <i class="fas fa-passport"></i> Choisir un fichier
+                                        <span id="titre-sejour-name" class="file-name">Aucun fichier sélectionné</span>
+                                    </label>
+                                    <input type="file" id="titre_sejour" name="titre_sejour" accept=".pdf,.jpg,.jpeg,.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Section 3: Documents justificatifs -->
+                    <div class="form-section" data-aos="fade-up">
+                        <div class="section-header">
+                            <div class="section-number">3</div>
+                            <h2 class="section-title">Documents justificatifs requis</h2>
+                        </div>
+                        
+                        <div class="section-content">
+                            <div class="form-group required">
+                                <label>Bulletins de salaire (3 derniers mois)</label>
+                                <div class="file-upload">
+                                    <label for="bulletins_salaire" class="file-upload-label">
+                                        <i class="fas fa-file-invoice-dollar"></i> Choisir des fichiers
+                                        <span id="bulletins-salaire-name" class="file-name">Aucun fichier sélectionné</span>
+                                    </label>
+                                    <input type="file" id="bulletins_salaire" name="bulletins_salaire" accept=".pdf,.jpg,.jpeg,.png" multiple required>
+                                </div>
+                                <div class="file-info">
+                                    <i class="fas fa-info-circle"></i> Vous pouvez sélectionner plusieurs fichiers à la fois
+                                </div>
+                            </div>
+                            
+                            <div class="form-group required">
+                                <label>Relevés bancaires (3 derniers mois)</label>
+                                <div class="file-upload">
+                                    <label for="releves_bancaires" class="file-upload-label">
+                                        <i class="fas fa-university"></i> Choisir des fichiers
+                                        <span id="releves-bancaires-name" class="file-name">Aucun fichier sélectionné</span>
+                                    </label>
+                                    <input type="file" id="releves_bancaires" name="releves_bancaires" accept=".pdf,.jpg,.jpeg,.png" multiple required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Factures ou devis (si financement d'un projet spécifique)</label>
+                                <div class="file-upload">
+                                    <label for="factures_devis" class="file-upload-label">
+                                        <i class="fas fa-file-invoice"></i> Choisir des fichiers
+                                        <span id="factures-devis-name" class="file-name">Aucun fichier sélectionné</span>
+                                    </label>
+                                    <input type="file" id="factures_devis" name="factures_devis" accept=".pdf,.jpg,.jpeg,.png" multiple>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group required">
+                                <label>Relevé d'identité bancaire (RIB)</label>
+                                <div class="file-upload">
+                                    <label for="rib" class="file-upload-label">
+                                        <i class="fas fa-money-check"></i> Choisir un fichier
+                                        <span id="rib-name" class="file-name">Aucun fichier sélectionné</span>
+                                    </label>
+                                    <input type="file" id="rib" name="rib" accept=".pdf,.jpg,.jpeg,.png" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Consentement -->
+                    <div class="consent-container" data-aos="fade-up">
+                        <div class="consent-checkbox required">
+                            <input type="checkbox" id="consentement" name="consentement" required>
+                            <label for="consentement">J'autorise Solideo Finances à utiliser mes données pour le traitement de ma demande conformément à la politique de confidentialité. Je comprends que mes informations seront traitées avec la plus grande confidentialité.</label>
+                        </div>
+                    </div>
+                    
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p class="loading-text">Envoi de votre demande en cours...</p>
+                    </div>
+                    
+                    <div class="message success-message" id="successMessage">
+                        <h3><i class="fas fa-check-circle"></i> Merci pour votre demande !</h3>
+                        <p>Votre formulaire a bien été envoyé. Un conseiller Solideo Finances vous contactera dans les 24 à 48 heures pour étudier votre dossier et vous proposer les meilleures solutions de financement.</p>
+                    </div>
+                    
+                    <div class="message error-message" id="errorMessage">
+                        <h3><i class="fas fa-exclamation-circle"></i> Une erreur est survenue</h3>
+                        <p id="errorText">Veuillez réessayer ou nous contacter directement par téléphone au 07 56 82 39 16.</p>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit" data-aos="fade-up">
+                        <i class="fas fa-paper-plane"></i> Soumettre ma demande
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column footer-about">
+                    <img src="logo-solideo.jpg" alt="Solideo Finances">
+                    <p>Solideo Finances vous accompagne dans tous vos projets avec des solutions de financement sur-mesure, transparentes et adaptées à votre situation.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li><a href="index.html#about"><i class="fas fa-chevron-right"></i> À propos</a></li>
+                        <li><a href="index.html#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="index.html#testimonials"><i class="fas fa-chevron-right"></i> Témoignages</a></li>
+                        <li><a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column footer-links">
+                    <h4>Nos services</h4>
+                    <ul>
+                        <li><a href="services.html#regroupement"><i class="fas fa-chevron-right"></i> Regroupement de crédits</a></li>
+                        <li><a href="services.html#immobilier"><i class="fas fa-chevron-right"></i> Financement immobilier</a></li>
+                        <li><a href="services.html#consommation"><i class="fas fa-chevron-right"></i> Crédit à la consommation</a></li>
+                        <li><a href="services.html#independants"><i class="fas fa-chevron-right"></i> Accompagnement des indépendants</a></li>
+                        <li><a href="services.html#budget"><i class="fas fa-chevron-right"></i> Conseil en gestion budgétaire</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column footer-newsletter">
+                    <h4>Newsletter</h4>
+                    <p>Inscrivez-vous à notre newsletter pour recevoir nos actualités et conseils financiers.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Votre email" class="newsletter-input" required>
+                        <button type="submit" class="newsletter-button"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-phone-alt"></i> 07 56 82 39 16</p>
+                        <p><i class="fas fa-envelope"></i> solideofinance@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Solideo Finances. Tous droits réservés. | <a href="privacy.html">Politique de confidentialité</a> | <a href="terms.html">Conditions d'utilisation</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         // Initialisation d'EmailJS (remplacez par vos identifiants)
-        emailjs.init(njFwF5i7zZlGKB6UP); // À remplacer par votre User ID EmailJS
+        emailjs.init("njFwF5i7zZlGKB6UP"); // À remplacer par votre User ID EmailJS
+        
+        // Initialisation AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease',
+            once: true,
+            offset: 100
+        });
+        
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            if (navMenu.classList.contains('active')) {
+                menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
         
         // Affichage des noms de fichiers sélectionnés
         document.getElementById('piece_identite').addEventListener('change', function(e) {
@@ -492,11 +1245,14 @@
             });
             
             // Envoyer les données via EmailJS
-            emailjs.send(service_i29hgy5, template_sjjwquk, formObject) // À remplacer par vos IDs
+            emailjs.send("service_i29hgy5", "template_sjjwquk", formObject) // À remplacer par vos IDs
                 .then(function(response) {
                     console.log('SUCCESS!', response.status, response.text);
                     document.getElementById('loading').style.display = 'none';
                     document.getElementById('successMessage').style.display = 'block';
+                    
+                    // Faire défiler jusqu'au message de succès
+                    document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
                     
                     // Réinitialiser le formulaire
                     document.getElementById('financeForm').reset();
@@ -510,6 +1266,9 @@
                     document.getElementById('errorMessage').style.display = 'block';
                     document.getElementById('errorText').textContent = 
                         'Une erreur est survenue: ' + (error.text || 'Veuillez réessayer plus tard.');
+                    
+                    // Faire défiler jusqu'au message d'erreur
+                    document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
                 });
             
             // Ici vous pourriez aussi envoyer les fichiers via un service comme Uploadcare
