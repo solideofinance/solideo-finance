@@ -1,505 +1,2179 @@
 <!DOCTYPE html>
-<html lang="<?php echo $currentLang; ?>">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solideo Finances</title>
+  <title>Solideo Finances - Solutions financières d'excellence</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --primary: #0a2540;
+      --primary-light: #1a3a5f;
+      --primary-dark: #051a30;
+      --secondary: #c8a45c;
+      --secondary-light: #d9bc7d;
+      --secondary-dark: #b08d3e;
+      --accent: #e6f0ff;
+      --text: #333333;
+      --text-light: #666666;
+      --light: #f8f9fa;
+      --white: #ffffff;
+      --dark: #1a1a1a;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --shadow-strong: 0 15px 35px rgba(0, 0, 0, 0.12);
+      --radius: 12px;
+      --radius-sm: 6px;
+      --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       margin: 0;
       padding: 0;
-      background: #f4f4f4;
-      color: #333;
-      animation: fadeIn 1s ease-in;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
     }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    header {
-      background-color: #003366;
-      color: white;
-      padding: 2rem;
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Preloader */
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .preloader.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .preloader-content {
       text-align: center;
-    }
-    header img {
-      width: 80px;
-      display: block;
-      margin: 0 auto 1rem;
-      animation: popIn 1s ease-out;
-    }
-    @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-    section {
-      max-width: 900px;
-      margin: 2rem auto;
-      background-color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      animation: fadeIn 1.5s ease-in;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
-      color: #333;
+      color: var(--white);
     }
 
-  nav {
-  background-color: #003366;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .preloader-logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 20px;
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(200, 164, 92, 0.5);
+      animation: pulse 2s infinite;
+    }
 
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(200, 164, 92, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 15px rgba(200, 164, 92, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(200, 164, 92, 0); }
+    }
+
+    /* Header & Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: var(--transition);
+      padding: 20px 0;
+    }
+
+    header.scrolled {
+      background: rgba(10, 37, 64, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+      transition: var(--transition);
+    }
+
+    .logo-text {
+      color: var(--white);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
 
     nav a {
-      color: white;
+      color: var(--white);
       text-decoration: none;
-      margin: 0 1.5rem;
-      font-weight: bold;
-      font-size: 1.1rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 8px 0;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: var(--transition);
     }
 
     nav a:hover {
-      text-decoration: underline;
+      color: var(--secondary);
     }
 
-    .menu-icon {
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: var(--secondary);
+      color: var(--primary-dark) !important;
+      padding: 10px 20px !important;
+      border-radius: 30px;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(200, 164, 92, 0.3);
+      transition: var(--transition);
+    }
+
+    .nav-cta:hover {
+      background: var(--secondary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(200, 164, 92, 0.4);
+    }
+
+    .nav-cta::after {
       display: none;
-      font-size: 2rem;
-      color: white;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
       cursor: pointer;
+      z-index: 1001;
     }
 
-    @media (max-width: 768px) {
-      nav a {
-        display: none;
-      }
-      .menu-icon {
-        display: block;
-      }
-      .menu-active {
-        display: block;
-        position: absolute;
-        top: 4rem;
-        left: 0;
-        width: 100%;
-        background-color: #003366;
-        text-align: center;
-        padding: 1rem;
-      }
-      .menu-active a {
-        display: block;
-        margin: 1rem 0;
-      }
-    }
-    h1, h2 { color: #003366; }
-    .slogan { font-style: italic; color: #ccc; margin-top: -10px; }
-    ul { padding-left: 1.5rem; }
-
-    .slider {
+    /* Hero Section */
+    .hero {
       position: relative;
-      width: 100%;
-      height: 400px;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
       overflow: hidden;
-      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
     }
 
-    .slides {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .slides img {
+    .hero::before {
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      filter: blur(4px);
-      transform: scale(1.1);
-      transition: opacity 10ms ease, filter 10ms ease, transform 10ms ease;
+      background-image: url('https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.15;
+      z-index: 0;
     }
 
-    .slides img.active {
-      opacity: 1;
-      filter: blur(0);
-      transform: scale(1);
-      z-index: 2;
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      color: var(--white);
     }
 
-    .contact-button {
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      color: var(--secondary);
+      position: relative;
       display: inline-block;
-      margin-top: 1rem;
-      padding: 0.8rem 1.5rem;
-      background-color: #003366;
-      color: #fff;
+    }
+
+    .hero h1 span::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: rgba(200, 164, 92, 0.3);
+      z-index: -1;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+      max-width: 90%;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 50px;
       text-decoration: none;
-      border-radius: 30px;
-      transition: background 0.3s ease, transform 0.3s ease;
-      font-weight: bold;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
     }
 
-    .contact-button:hover {
-      background-color: #0055aa;
-      transform: scale(1.05);
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      transition: var(--transition);
+      z-index: -1;
     }
 
-    .testimonial {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 1.5rem;
-}
-
-.testimonial-photo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
-}
-
-
-    blockquote {
-      margin: 1rem 0;
-      padding: 1rem;
-      background: #f0f8ff;
-      border-left: 5px solid #003366;
-      font-style: italic;
-    }
-      
-    blockquote footer {
-      margin-top: 0.5rem;
-      font-style: normal;
-      font-weight: bold;
+    .btn:hover::before {
+      width: 100%;
     }
 
-    form {
+    .btn-primary {
+      background: var(--secondary);
+      color: var(--primary-dark);
+      box-shadow: 0 5px 20px rgba(200, 164, 92, 0.3);
+    }
+
+    .btn-primary::before {
+      background: var(--secondary-light);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 25px rgba(200, 164, 92, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+
+    .btn-outline::before {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--secondary);
+      color: var(--secondary);
+      transform: translateY(-3px);
+    }
+
+    .hero-image {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 45%;
+      max-width: 700px;
+      z-index: 0;
+      opacity: 0.8;
+      transform: translateY(20%);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(20%); }
+      50% { transform: translateY(15%); }
+    }
+
+    .scroll-down {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--white);
+      font-size: 1.2rem;
+      text-decoration: none;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin-top: 1rem;
-    }
-    form input, form textarea {
-      padding: 0.6rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    form button {
-      padding: 0.7rem;
-      background-color: #003366;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      align-items: center;
+      opacity: 0.7;
+      transition: var(--transition);
     }
 
-    .stats-modern {
-  background: linear-gradient(to right, #003366, #0055aa);
-  color: white;
-  text-align: center;
-  padding: 3rem 1rem;
-  border-radius: 10px;
-  margin: 2rem auto;
-  max-width: 1000px;
-}
+    .scroll-down:hover {
+      opacity: 1;
+      transform: translate(-50%, -5px);
+    }
 
-.stats-modern h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
+    .scroll-down i {
+      animation: bounce 2s infinite;
+    }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 2rem;
-  justify-items: center;
-}
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
 
-.stat-box {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
-  width: 100%;
-  max-width: 220px;
-}
+    /* About Section */
+    .section {
+      padding: 120px 0;
+      position: relative;
+    }
 
-.stat-box:hover {
-  transform: scale(1.05);
-  background-color: rgba(255, 255, 255, 0.15);
-}
+    .section-light {
+      background: var(--light);
+    }
 
-.stat-box .icon {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
+    .section-dark {
+      background: var(--primary);
+      color: var(--white);
+    }
 
-.stat-box h3 {
-  font-size: 2rem;
-  margin: 0;
-  font-weight: bold;
-  color: #ffffff;
-}
+    .section-accent {
+      background: var(--accent);
+    }
 
-.stat-box p {
-  margin: 0.3rem 0 0;
-  font-size: 1rem;
-  color: #ddd;
-}
-
-
-    footer {
+    .section-title {
       text-align: center;
-      padding: 1rem;
-      background-color: #eeeeee;
+      margin-bottom: 60px;
+      position: relative;
+    }
+
+    .section-title h2 {
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-dark .section-title h2 {
+      color: var(--white);
+    }
+
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--secondary);
+    }
+
+    .section-title p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .section-dark .section-title p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .about-text p {
+      margin-bottom: 20px;
+      font-size: 1.05rem;
+    }
+
+    .about-image {
+      flex: 1;
+      position: relative;
+    }
+
+    .about-image img {
+      width: 100%;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .about-image::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid var(--secondary);
+      border-radius: var(--radius);
+      z-index: -1;
+    }
+
+    .about-image::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 150px;
+      height: 150px;
+      background: var(--secondary);
+      opacity: 0.1;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    /* Features Section */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 40px 30px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      height: 100%;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 0;
+      background: var(--secondary);
+      transition: var(--transition);
+      z-index: -1;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .feature-card:hover::before {
+      height: 100%;
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin-bottom: 20px;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.1);
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+      transition: var(--transition);
+    }
+
+    .feature-description {
+      color: var(--text-light);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Services Section */
+    .services-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 50px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tab-button {
+      background: transparent;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: var(--transition);
+      border-radius: 30px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .tab-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--secondary);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+      transform: translateY(100%);
+    }
+
+    .tab-button:hover {
+      color: var(--primary);
+    }
+
+    .tab-button:hover::before {
+      opacity: 0.1;
+      transform: translateY(0);
+    }
+
+    .tab-button.active {
+      background: var(--secondary);
+      color: var(--primary-dark);
+      box-shadow: 0 5px 15px rgba(200, 164, 92, 0.2);
+    }
+
+    .tab-button.active::before {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      height: 100%;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .service-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .service-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .service-card:hover .service-image img {
+      transform: scale(1.1);
+    }
+
+    .service-content {
+      padding: 30px;
+    }
+
+    .service-title {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .service-title i {
+      color: var(--secondary);
+    }
+
+    .service-description {
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--secondary);
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      gap: 5px;
+    }
+
+    .service-link:hover {
+      color: var(--secondary-dark);
+      gap: 10px;
+    }
+
+    /* Testimonials Section */
+    .testimonials-slider {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .testimonials-track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .testimonial-slide {
+      min-width: 100%;
+      padding: 20px;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '\201C';
+      font-family: Georgia, serif;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 5rem;
+      color: rgba(200, 164, 92, 0.2);
+      line-height: 1;
+    }
+
+    .testimonial-content {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .author-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--secondary);
+    }
+
+    .author-info h4 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: var(--primary);
+    }
+
+    .author-info p {
+      color: var(--text-light);
       font-size: 0.9rem;
     }
 
-    @media (max-width: 600px) {
-      header, section { padding: 1rem; }
-      h1 { font-size: 1.5rem; }
-      .slider { height: 250px; }
+    .testimonial-nav {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .testimonial-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(200, 164, 92, 0.3);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .testimonial-dot.active {
+      background: var(--secondary);
+      transform: scale(1.2);
+    }
+
+    .testimonial-arrows {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 2;
+      padding: 0 20px;
+    }
+
+    .testimonial-arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    .testimonial-arrow:hover {
+      background: var(--secondary);
+      color: var(--primary-dark);
+      transform: scale(1.1);
+    }
+
+    /* Stats Section */
+    .stats-section {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.05;
+      z-index: 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 30px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      transition: var(--transition);
+    }
+
+    .stat-item:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .stat-icon {
+      font-size: 2.5rem;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(to right, var(--white), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 300px;
+      height: 300px;
+      background: var(--secondary);
+      opacity: 0.05;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -100px;
+      width: 300px;
+      height: 300px;
+      background: var(--primary);
+      opacity: 0.05;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .cta-title {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .cta-description {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-secondary {
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 5px 20px rgba(10, 37, 64, 0.3);
+    }
+
+    .btn-secondary::before {
+      background: var(--primary-light);
+    }
+
+    .btn-secondary:hover {
+      box-shadow: 0 8px 25px rgba(10, 37, 64, 0.4);
+      transform: translateY(-3px);
+    }
+
+    /* Contact Section */
+    .contact-section {
+      background: var(--light);
+    }
+
+    .contact-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 50px;
+    }
+
+    .contact-info {
+      padding-right: 30px;
+    }
+
+    .contact-info h3 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 30px;
+    }
+
+    .contact-info p {
+      margin-bottom: 30px;
+      color: var(--text-light);
+    }
+
+    .contact-details {
+      margin-bottom: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: var(--transition);
+    }
+
+    .contact-item:hover .contact-icon {
+      background: var(--secondary);
+      transform: scale(1.1);
+    }
+
+    .contact-text {
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .contact-text strong {
+      display: block;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .contact-form {
+      background: var(--white);
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(200, 164, 92, 0.1);
+    }
+
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .form-button {
+      width: 100%;
+      padding: 15px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .form-button:hover {
+      background: var(--primary-light);
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary-dark);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 80px 0 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary), var(--secondary), var(--primary));
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+
+    .footer-column h4 {
+      color: var(--white);
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .footer-column h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--secondary);
+    }
+
+    .footer-about img {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .footer-about p {
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-links a:hover {
+      color: var(--secondary);
+      transform: translateX(5px);
+    }
+
+    .footer-links a i {
+      font-size: 0.8rem;
+    }
+
+    .footer-contact p {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .footer-contact i {
+      color: var(--secondary);
+      font-size: 1.2rem;
+      margin-top: 3px;
+    }
+
+    .footer-newsletter p {
+      margin-bottom: 20px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      font-size: 0.9rem;
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+
+    .newsletter-button {
+      background: var(--secondary);
+      color: var(--primary-dark);
+      border: none;
+      padding: 12px 15px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .newsletter-button:hover {
+      background: var(--secondary-light);
+      transform: translateY(-3px);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1.1rem;
+      transition: var(--transition);
+    }
+
+    .social-icon:hover {
+      background: var(--secondary);
+      color: var(--primary-dark);
+      transform: translateY(-5px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+    }
+
+    .footer-bottom a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: var(--secondary);
+      color: var(--primary-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 999;
+    }
+
+    .back-to-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--secondary-light);
+      transform: translateY(-5px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .hero h1 {
+        font-size: 3rem;
+      }
+      
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .section {
+        padding: 80px 0;
+      }
+      
+      .hero {
+        min-height: 600px;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .about-content {
+        flex-direction: column;
+        gap: 40px;
+      }
+      
+      .about-image {
+        order: -1;
+      }
+      
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-info {
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 0;
+      }
+      
+      .logo img {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .logo-text {
+        font-size: 1.3rem;
+      }
+      
+      nav ul {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(10, 37, 64, 0.95);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        z-index: 1000;
+        transition: var(--transition);
+      }
+      
+      nav ul.active {
+        display: flex;
+      }
+      
+      nav a {
+        font-size: 1.2rem;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+      
+      .hero {
+        text-align: center;
+      }
+      
+      .hero-content {
+        max-width: 100%;
+      }
+      
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .hero p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .hero-buttons {
+        justify-content: center;
+      }
+      
+      .hero-image {
+        display: none;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .container {
+        padding: 0 20px;
+      }
+      
+      .section {
+        padding: 60px 0;
+      }
+      
+      .section-title h2 {
+        font-size: 2.2rem;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .hero p {
+        font-size: 1rem;
+      }
+      
+      .btn {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+      }
+      
+      .testimonial-card {
+        padding: 30px 20px;
+      }
+      
+      .testimonial-arrows {
+        display: none;
+      }
+      
+      .cta-title {
+        font-size: 2rem;
+      }
+      
+      .contact-form {
+        padding: 30px 20px;
+      }
     }
   </style>
-  <script>
-    const userLang = navigator.language.slice(0, 2);
-    fetch(`lang/${userLang}.json`).then(res => res.json()).then(dict => {
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        el.textContent = dict[key] || key;
-      });
-    }).catch(() => {});
-  </script>
 </head>
 <body>
-  <header>
-    <img src="logo solideo.jpg" alt="Solideo logo">
-    <h1 data-i18n="welcome">Solideo Finances</h1>
-    <p class="slogan">« Bâtir ensemble votre avenir financier »</p>
-    <nav>
-        <!-- Menu mobile -->
-        <div class="menu-active" id="mobile-menu">
-          <a href="index.html">Accueil</a>
-          <a href="simulation.html">Simulation</a>
-          <a href="formulaire_demande.html">Formulaire</a>
-        </div>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="preloader-content">
+      <img src="logo-solideo.jpg" alt="Solideo Finances" class="preloader-logo">
+      <h2>Solideo Finances</h2>
+      <p>Chargement...</p>
+    </div>
+  </div>
+
+  <!-- Header & Navigation -->
+  <header id="header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <img src="logo-solideo.jpg" alt="Solideo Finances">
+        <span class="logo-text">Solideo Finances</span>
+      </a>
+      <nav>
+        <button class="menu-toggle" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul id="nav-menu">
+          <li><a href="#hero">Accueil</a></li>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#testimonials">Témoignages</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="simulation.html" class="nav-cta">Simulation</a></li>
+        </ul>
       </nav>
+    </div>
   </header>
 
-  <section>
-    <h2 data-i18n="Qui sommes-nous">Qui sommes-nous ?</h2>
-    <div class="slider">
-      <div class="slides">
-        <img src="BPIMACRON.jpg" alt="Agence de financement" class="active">
-        <img src="BPI2.jpg" alt="Offre financeme32700_960_720.jpgnt">
-        <img src="PT6.jpg" alt="Financement projet">
-        <img src="PT4.jpg" alt="Financement projet">
-        <img src="PT5.jpg" alt="Financement projet">
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
+        <h1>Bâtissons ensemble votre <span>avenir financier</span></h1>
+        <p>Solideo Finances vous accompagne dans tous vos projets avec des solutions de financement sur-mesure, transparentes et adaptées à votre situation.</p>
+        <div class="hero-buttons">
+          <a href="#services" class="btn btn-primary">Découvrir nos services</a>
+          <a href="#contact" class="btn btn-outline">Nous contacter</a>
+        </div>
       </div>
     </div>
-    <p data-i18n="description">Solideo Finances est une agence de financement innovante et humaine, implantée en France, qui accompagne les particuliers, indépendants et petites entreprises dans la réalisation de leurs projets financiers.</p>
-    <p data-i18n="description">Notre objectif : apporter des solutions accessibles, sur-mesure et 100% transparentes.</p>
+    <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Finance illustration" class="hero-image" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="300">
+    <a href="#about" class="scroll-down">
+      <span>Découvrir</span>
+      <i class="fas fa-chevron-down"></i>
+    </a>
   </section>
 
-  <section>
-    <h2 data-i18n="Nos piliers">Nos 3 piliers</h2>
-    <h3>1. Accompagnement personnalisé et humain</h3>
-    <p>Chez Solideo Finances, chaque client est unique. Nos conseillers financiers sont formés pour écouter, comprendre et orienter chacun vers la solution la plus adaptée à sa situation.</p>
-    <h3>2. Transparence & pédagogie financière</h3>
-    <p>Nous vulgarisons les informations clés pour aider nos clients à prendre des décisions éclairées.</p>
-    <h3>3. Solutions sur-mesure et accessibles</h3>
-    <p>Grâce à notre réseau de partenaires bancaires, nous proposons des offres variées et flexibles, même en cas de refus bancaire initial.</p>
-  </section>
-  <section>
-  <h2 data-i18n="services">Nos services en détail</h2>
-  <div style="display: flex; flex-direction: column; gap: 2rem; line-height: 1.6;">
-
-    <div style="background-color: #e8f0ff; padding: 1.5rem; border-radius: 10px;">
-      <h3>📄 Regroupement de crédits</h3>
-      <p>
-        Vous avez plusieurs prêts en cours ? Notre service de regroupement de crédits vous permet de réunir tous vos crédits (crédit conso, auto, personnel, etc.) en un seul. L’objectif : alléger vos mensualités et rééquilibrer votre budget. 
-        Nous analysons votre situation financière et négocions un nouveau taux et une nouvelle durée auprès de nos partenaires bancaires pour vous offrir une solution simple, souple et adaptée à vos besoins.
-      </p>
+  <!-- About Section -->
+  <section class="section section-light" id="about">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Qui sommes-nous ?</h2>
+        <p>Découvrez notre approche unique et notre engagement envers votre réussite financière</p>
+      </div>
+      <div class="about-content">
+        <div class="about-text" data-aos="fade-right" data-aos-duration="1000">
+          <h3>Une expertise financière à votre service</h3>
+          <p>Solideo Finances est une agence de financement innovante et humaine, implantée en France, qui accompagne les particuliers, indépendants et petites entreprises dans la réalisation de leurs projets financiers.</p>
+          <p>Notre mission est de démocratiser l'accès aux solutions de financement en proposant un accompagnement personnalisé, transparent et adapté à chaque situation. Nous croyons que chacun mérite une chance de concrétiser ses projets, quels que soient son profil ou son historique bancaire.</p>
+          <p>Grâce à notre réseau de partenaires bancaires et notre expertise du marché, nous trouvons les meilleures solutions pour vous, même dans les situations complexes.</p>
+          <a href="#services" class="btn btn-primary">Nos services</a>
+        </div>
+        <div class="about-image" data-aos="fade-left" data-aos-duration="1000">
+          <img src="BPIMACRON.jpg" alt="Solideo Finances équipe">
+        </div>
+      </div>
     </div>
-
-    <div style="background-color: #fef3e2; padding: 1.5rem; border-radius: 10px;">
-      <h3 data-i18n="Financement">🏡 Financement immobilier</h3>
-      <p data-i18n="description">
-        Que vous soyez primo-accédant ou investisseur, Solideo Finances vous accompagne dans toutes les étapes de votre projet immobilier. Nous étudions votre dossier, simulons vos capacités d’emprunt, puis recherchons le financement optimal auprès de nos partenaires. 
-        Notre accompagnement comprend également les assurances emprunteur, les frais de notaire, et des conseils pour sécuriser votre achat. Avec nous, vous bénéficiez d’un accompagnement humain et professionnel du début à la fin.
-      </p>
-    </div>
-
-    <div style="background-color: #e5f7ec; padding: 1.5rem; border-radius: 10px;">
-      <h3 data-i18n="Welcome">🚗 Crédit à la consommation</h3>
-      <p data-i18n="description">
-        Un besoin urgent de trésorerie ? Un projet personnel ou l’achat d’un véhicule ? Nos solutions de crédit à la consommation vous permettent d’obtenir rapidement les fonds nécessaires, avec des conditions claires et flexibles. 
-        Chez Solideo, nous vous expliquons chaque étape, les taux pratiqués et les implications. Notre objectif : vous permettre d’avancer sereinement, sans piège ni pression.
-      </p>
-    </div>
-
-    <div style="background-color: #f3e9f9; padding: 1.5rem; border-radius: 10px;">
-      <h3 data-i18n="Welcome">👨‍💼 Accompagnement des indépendants</h3>
-      <p data-i18n="description">
-        Vous êtes freelance, artisan ou profession libérale ? Vos revenus irréguliers ne doivent pas être un frein à vos projets. Nous avons mis en place un accompagnement spécifique pour les indépendants, avec des solutions adaptées à leur réalité. 
-        Nous vous aidons à constituer un dossier solide, à valoriser vos revenus, et à trouver des financements auprès de banques qui comprennent les spécificités de votre activité. 
-      </p>
-    </div>
-
-    <div style="background-color: #fff3f3; padding: 1.5rem; border-radius: 10px;">
-      <h3 data-i18n="Welcome">📈 Conseil en gestion budgétaire</h3>
-      <p data-i18n="description">
-        Bien gérer son budget, c’est la base d’un avenir financier stable. C’est pourquoi nous proposons un service de conseil personnalisé : nous analysons ensemble vos revenus, dépenses, habitudes de consommation, et mettons en place un plan d’action simple. 
-        Que vous souhaitiez épargner, investir ou simplement mieux gérer votre quotidien, nos conseillers sont là pour vous orienter avec pédagogie et bienveillance.
-      </p>
-    </div>
-
-  </div>
-  <div class="slider">
-    <div class="slides">
-      <img src="bpi1.jpg" alt="Agence de financement" class="active">
-      <img src="BPI3.jpg" alt="Offre financeme32700_960_720.jpgnt">
-      <img src="BPI4.jpg" alt="Financement projet">
-      <img src="BPI5.jpg" alt="Financement projet">
-      <img src="BPI6.jpg" alt="Financement projet">
-    </div>
-  </div>
-</section>
-
-<section>
-  <h2 data-i18n="Welcome">Témoignages clients</h2>
-
-  <div class="testimonial">
-    <img src="témoingarcon.jpg" alt="Karim T." class="testimonial-photo">
-    <blockquote>
-      <p data-i18n="description">"J'étais perdu avec mes dettes jusqu'à ce que Solideo me guide pas à pas. Aujourd'hui, je respire financièrement."</p>
-      <footer>– Karim T., 34 ans, auto-entrepreneur à Marseille</footer>
-    </blockquote>
-  </div>
-
-  <div class="testimonial">
-    <img src="témoinfille.jpg" alt="Léa D." class="testimonial-photo">
-    <blockquote>
-      <p data-i18n="description">"Grâce à Solideo, j’ai obtenu un crédit immo en 15 jours. Équipe super réactive et humaine !"</p>
-      <footer>– Léa D., 28 ans, infirmière à Lyon</footer>
-    </blockquote>
-  </div>
-
-  <h3>Laissez votre témoignage</h3>
-  <form action="mailto:solideofinance@gmail.com" method="post" enctype="text/plain">
-    <input type="text" name="nom" placeholder="Votre nom" required>
-    <input type="text" name="ville" placeholder="Ville">
-    <textarea name="message" placeholder="Votre témoignage..." required></textarea>
-    <button type="submit">Envoyer</button>
-  </form>
-</section>
-  
-
-
-  <section>
-    <h2 data-i18n="welcome">Offre de lancement</h2>
-    <p data-i18n="Welcome">Pour toute première demande de financement réalisée avant le 30 juin, bénéficiez de :</p>
-    <ul>
-      <li>Une simulation gratuite et détaillée</li>
-      <li>Des frais de dossier réduits de 50%</li>
-      <li>Un rendez-vous conseil personnalisé offert</li>
-    </ul>
   </section>
 
-  <section>
-    <h2 data-i18n="welcome">Contact</h2>
-    <p><strong>Site web :</strong> www.solideo-finances.fr</p>
-    <p><strong>Whatsapp :</strong> 07 56 82 39 16</p>
-    <p><strong>Email :</strong> solideofinance@gmail.com</p>
-    <a href="mailto:solideofinance@gmail.com" class="contact-button">Contactez-nous</a>
+  <!-- Features Section -->
+  <section class="section section-accent" id="features">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Nos 3 piliers</h2>
+        <p>Les valeurs fondamentales qui guident notre approche et garantissent votre satisfaction</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+          <div class="feature-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <h3 class="feature-title">Accompagnement personnalisé</h3>
+          <p class="feature-description">Chez Solideo Finances, chaque client est unique. Nos conseillers financiers sont formés pour écouter, comprendre et orienter chacun vers la solution la plus adaptée à sa situation personnelle et professionnelle.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+          <div class="feature-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3 class="feature-title">Transparence & pédagogie</h3>
+          <p class="feature-description">Nous vulgarisons les informations clés pour aider nos clients à prendre des décisions éclairées. Notre approche pédagogique vous permet de comprendre chaque étape du processus, sans jargon incompréhensible.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+          <div class="feature-icon">
+            <i class="fas fa-puzzle-piece"></i>
+          </div>
+          <h3 class="feature-title">Solutions sur-mesure</h3>
+          <p class="feature-description">Grâce à notre réseau de partenaires bancaires, nous proposons des offres variées et flexibles, même en cas de refus bancaire initial. Notre expertise nous permet de trouver des solutions adaptées à votre situation.</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-<section id="stats-section" class="stats-modern">
-  <h2 data-i18n="description">Nos chiffres clés</h2>
-  <div class="stats-grid">
-    <div class="stat-box">
-      <span class="icon">👥</span>
-      <h3 data-target="25000">0</h3>
-      <p data-i18n="description">Visiteurs uniques</p>
-    </div>
-    <div class="stat-box">
-      <span class="icon">🌟</span>
-      <h3 data-target="98">0</h3>
-      <p data-i18n="description">Clients satisfaits (%)</p>
-    </div>
-    <div class="stat-box">
-      <span class="icon">💼</span>
-      <h3 data-target="350">0</h3>
-      <p data-i18n="description">Dossiers financés</p>
-    </div>
-    <div class="stat-box">
-      <span class="icon">⭐</span>
-      <h3 data-target="4.9">0</h3>
-      <p data-i18n="description">Note moyenne</p>
-    </div>
-  </div>
-</section>
+  <!-- Services Section -->
+  <section class="section section-light" id="services">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Nos services</h2>
+        <p>Des solutions financières adaptées à tous vos besoins</p>
+      </div>
+      <div class="services-tabs" data-aos="fade-up">
+        <button class="tab-button active" data-tab="tab1">Tous les services</button>
+        <button class="tab-button" data-tab="tab2">Particuliers</button>
+        <button class="tab-button" data-tab="tab3">Professionnels</button>
+        <button class="tab-button" data-tab="tab4">Conseils</button>
+      </div>
+      
+      <div id="tab1" class="tab-content active">
+        <div class="service-grid">
+          <div class="service-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Regroupement de crédits">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-file-invoice"></i> Regroupement de crédits</h3>
+              <p class="service-description">Vous avez plusieurs prêts en cours ? Notre service de regroupement de crédits vous permet de réunir tous vos crédits en un seul pour alléger vos mensualités et rééquilibrer votre budget.</p>
+              <a href="services.html#regroupement" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="service-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Financement immobilier">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-home"></i> Financement immobilier</h3>
+              <p class="service-description">Que vous soyez primo-accédant ou investisseur, nous vous accompagnons dans toutes les étapes de votre projet immobilier, de l'étude de capacité à la signature chez le notaire.</p>
+              <a href="services.html#immobilier" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="service-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Crédit à la consommation">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-car"></i> Crédit à la consommation</h3>
+              <p class="service-description">Un besoin urgent de trésorerie ? Un projet personnel ou l'achat d'un véhicule ? Nos solutions de crédit à la consommation vous permettent d'obtenir rapidement les fonds nécessaires.</p>
+              <a href="services.html#consommation" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="service-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="400">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Accompagnement des indépendants">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-briefcase"></i> Accompagnement des indépendants</h3>
+              <p class="service-description">Vous êtes freelance, artisan ou profession libérale ? Nous avons mis en place un accompagnement spécifique pour les indépendants, avec des solutions adaptées à leur réalité.</p>
+              <a href="services.html#independants" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="tab2" class="tab-content">
+        <div class="service-grid">
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Financement immobilier">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-home"></i> Financement immobilier</h3>
+              <p class="service-description">Que vous soyez primo-accédant ou investisseur, nous vous accompagnons dans toutes les étapes de votre projet immobilier, de l'étude de capacité à la signature chez le notaire.</p>
+              <a href="services.html#immobilier" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Crédit à la consommation">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-car"></i> Crédit à la consommation</h3>
+              <p class="service-description">Un besoin urgent de trésorerie ? Un projet personnel ou l'achat d'un véhicule ? Nos solutions de crédit à la consommation vous permettent d'obtenir rapidement les fonds nécessaires.</p>
+              <a href="services.html#consommation" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1579621970795-87facc2f976d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Regroupement de crédits">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-file-invoice"></i> Regroupement de crédits</h3>
+              <p class="service-description">Vous avez plusieurs prêts en cours ? Notre service de regroupement de crédits vous permet de réunir tous vos crédits en un seul pour alléger vos mensualités et rééquilibrer votre budget.</p>
+              <a href="services.html#regroupement" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="tab3" class="tab-content">
+        <div class="service-grid">
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Accompagnement des indépendants">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-briefcase"></i> Accompagnement des indépendants</h3>
+              <p class="service-description">Vous êtes freelance, artisan ou profession libérale ? Nous avons mis en place un accompagnement spécifique pour les indépendants, avec des solutions adaptées à leur réalité.</p>
+              <a href="services.html#independants" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Financement professionnel">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-store"></i> Financement professionnel</h3>
+              <p class="service-description">Besoin de financer votre activité, d'investir dans du matériel ou de développer votre entreprise ? Nos solutions de financement professionnel sont adaptées à votre secteur d'activité.</p>
+              <a href="services.html#professionnel" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="tab4" class="tab-content">
+        <div class="service-grid">
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1434626881859-194d67b2b86f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80" alt="Conseil en gestion budgétaire">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-chart-line"></i> Conseil en gestion budgétaire</h3>
+              <p class="service-description">Bien gérer son budget, c'est la base d'un avenir financier stable. Nous analysons ensemble vos revenus, dépenses, habitudes de consommation, et mettons en place un plan d'action simple.</p>
+              <a href="services.html#budget" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-image">
+              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90<Thinking>
+I need to continue the HTML code from where it was cut off. The last part was an image URL in a service card within the "tab4" section of the services section. I'll continue from that exact point, maintaining the structure and style of the previous content.
+</Thinking>
 
+https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Formation financière">
+            </div>
+            <div class="service-content">
+              <h3 class="service-title"><i class="fas fa-graduation-cap"></i> Formation financière</h3>
+              <p class="service-description">Nous proposons des ateliers et formations pour vous aider à mieux comprendre les mécanismes financiers et prendre des décisions éclairées pour votre avenir.</p>
+              <a href="services.html#formation" class="service-link">En savoir plus <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="section section-dark" id="testimonials">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Témoignages clients</h2>
+        <p>Découvrez ce que nos clients disent de notre accompagnement</p>
+      </div>
+      <div class="testimonials-slider" data-aos="fade-up" data-aos-delay="200">
+        <div class="testimonials-track" id="testimonials-track">
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <p class="testimonial-content">J'étais perdu avec mes dettes jusqu'à ce que Solideo me guide pas à pas. Aujourd'hui, je respire financièrement et j'ai pu retrouver une stabilité que je croyais perdue. Leur approche humaine fait toute la différence.</p>
+              <div class="testimonial-author">
+                <img src="témoingarcon.jpg" alt="Karim T." class="author-image">
+                <div class="author-info">
+                  <h4>Karim T.</h4>
+                  <p>Auto-entrepreneur à Marseille</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <p class="testimonial-content">Grâce à Solideo, j'ai obtenu un crédit immobilier en 15 jours alors que ma banque habituelle m'avait refusée. L'équipe est super réactive, humaine et m'a accompagnée à chaque étape. Je recommande à 100% !</p>
+              <div class="testimonial-author">
+                <img src="témoinfille.jpg" alt="Léa D." class="author-image">
+                <div class="author-info">
+                  <h4>Léa D.</h4>
+                  <p>Infirmière à Lyon</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-slide">
+            <div class="testimonial-card">
+              <p class="testimonial-content">En tant qu'indépendant, j'avais du mal à trouver un financement pour mon local professionnel. Solideo a su valoriser mon activité auprès des banques et m'a obtenu un prêt dans des conditions excellentes.</p>
+              <div class="testimonial-author">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Thomas M." class="author-image">
+                <div class="author-info">
+                  <h4>Thomas M.</h4>
+                  <p>Architecte à Bordeaux</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-arrows">
+          <div class="testimonial-arrow" id="prev-testimonial">
+            <i class="fas fa-chevron-left"></i>
+          </div>
+          <div class="testimonial-arrow" id="next-testimonial">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+        </div>
+        <div class="testimonial-nav" id="testimonial-nav"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="section stats-section" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-number" data-target="25000">0</div>
+          <div class="stat-label">Visiteurs uniques</div>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+          <div class="stat-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="stat-number" data-target="98">0</div>
+          <div class="stat-label">Clients satisfaits (%)</div>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+          <div class="stat-icon">
+            <i class="fas fa-file-signature"></i>
+          </div>
+          <div class="stat-number" data-target="350">0</div>
+          <div class="stat-label">Dossiers financés</div>
+        </div>
+        <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+          <div class="stat-icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <div class="stat-number" data-target="4.9">0</div>
+          <div class="stat-label">Note moyenne</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta-section" id="cta">
+    <div class="container">
+      <div class="cta-content" data-aos="fade-up">
+        <h2 class="cta-title">Prêt à concrétiser votre projet ?</h2>
+        <p class="cta-description">Pour toute première demande de financement réalisée avant le 30 juin, bénéficiez d'une simulation gratuite, de frais de dossier réduits de 50% et d'un rendez-vous conseil personnalisé offert.</p>
+        <div class="cta-buttons">
+          <a href="simulation.html" class="btn btn-primary">Faire une simulation</a>
+          <a href="#contact" class="btn btn-secondary">Nous contacter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>Besoin d'informations ou prêt à démarrer votre projet ? Notre équipe est à votre disposition</p>
+      </div>
+      <div class="contact-container">
+        <div class="contact-info" data-aos="fade-right">
+          <h3>Parlons de votre projet</h3>
+          <p>Besoin d'informations ou prêt à démarrer votre projet ? Notre équipe est à votre disposition pour vous accompagner et répondre à toutes vos questions.</p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="contact-text">
+                <strong>Adresse</strong>
+                15 rue de la Finance, 75008 Paris
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-phone-alt"></i>
+              </div>
+              <div class="contact-text">
+                <strong>Téléphone</strong>
+                07 56 82 39 16
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+              <div class="contact-text">
+                <strong>WhatsApp</strong>
+                07 56 82 39 16
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="contact-text">
+                <strong>Email</strong>
+                solideofinance@gmail.com
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form" data-aos="fade-left">
+          <form action="mailto:solideofinance@gmail.com" method="post" enctype="text/plain">
+            <div class="form-group">
+              <label for="name" class="form-label">Nom complet</label>
+              <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="form-label">Téléphone</label>
+              <input type="tel" id="phone" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="subject" class="form-label">Sujet</label>
+              <input type="text" id="subject" name="subject" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="message" class="form-label">Message</label>
+              <textarea id="message" name="message" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="form-button">Envoyer le message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column footer-about">
+          <img src="logo-solideo.jpg" alt="Solideo Finances">
+          <p>Solideo Finances vous accompagne dans tous vos projets avec des solutions de financement sur-mesure, transparentes et adaptées à votre situation.</p>
+          <div class="footer-social">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-column footer-links">
+          <h4>Liens rapides</h4>
+          <ul>
+            <li><a href="#hero"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+            <li><a href="#about"><i class="fas fa-chevron-right"></i> À propos</a></li>
+            <li><a href="#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+            <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Témoignages</a></li>
+            <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column footer-links">
+          <h4>Nos services</h4>
+          <ul>
+            <li><a href="services.html#regroupement"><i class="fas fa-chevron-right"></i> Regroupement de crédits</a></li>
+            <li><a href="services.html#immobilier"><i class="fas fa-chevron-right"></i> Financement immobilier</a></li>
+            <li><a href="services.html#consommation"><i class="fas fa-chevron-right"></i> Crédit à la consommation</a></li>
+            <li><a href="services.html#independants"><i class="fas fa-chevron-right"></i> Accompagnement des indépendants</a></li>
+            <li><a href="services.html#budget"><i class="fas fa-chevron-right"></i> Conseil en gestion budgétaire</a></li>
+          </ul>
+        </div>
+        <div class="footer-column footer-newsletter">
+          <h4>Newsletter</h4>
+          <p>Inscrivez-vous à notre newsletter pour recevoir nos actualités et conseils financiers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Votre email" class="newsletter-input" required>
+            <button type="submit" class="newsletter-button"><i class="fas fa-paper-plane"></i></button>
+          </form>
+          <div class="footer-contact">
+            <p><i class="fas fa-phone-alt"></i> 07 56 82 39 16</p>
+            <p><i class="fas fa-envelope"></i> solideofinance@gmail.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Solideo Finances. Tous droits réservés. | <a href="privacy.html">Politique de confidentialité</a> | <a href="terms.html">Conditions d'utilisation</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
-    const slides = document.querySelectorAll('.slides img');
-    let current = 0;
+    // Preloader
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.querySelector('.preloader').classList.add('fade-out');
+      }, 1000);
+    });
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease',
+      once: true,
+      offset: 100
+    });
+
+    // Header Scroll
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    menuToggle.addEventListener('click', function() {
+      navMenu.classList.toggle('active');
+      if (navMenu.classList.contains('active')) {
+        menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+      } else {
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+
+    // Services Tabs
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const tabId = button.getAttribute('data-tab');
+        
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        button.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Testimonials Slider
+    const testimonialsTrack = document.getElementById('testimonials-track');
+    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+    const testimonialNav = document.getElementById('testimonial-nav');
+    const prevButton = document.getElementById('prev-testimonial');
+    const nextButton = document.getElementById('next-testimonial');
+    let currentSlide = 0;
+    
+    // Create dots
+    testimonialSlides.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('testimonial-dot');
+      if (index === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(index));
+      testimonialNav.appendChild(dot);
+    });
+    
+    const dots = document.querySelectorAll('.testimonial-dot');
+    
+    function goToSlide(index) {
+      testimonialsTrack.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+    
+    prevButton.addEventListener('click', () => {
+      currentSlide = (currentSlide - 1 + testimonialSlides.length) % testimonialSlides.length;
+      goToSlide(currentSlide);
+    });
+    
+    nextButton.addEventListener('click', () => {
+      currentSlide = (currentSlide + 1) % testimonialSlides.length;
+      goToSlide(currentSlide);
+    });
+    
+    // Auto slide
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % testimonialSlides.length;
+      goToSlide(currentSlide);
+    }, 5000);
+
+    // Stats Counter Animation
+    const statNumbers = document.querySelectorAll('.stat-number');
+    let statsStarted = false;
+
+    function animateStats() {
+      statNumbers.forEach(stat => {
+        const target = parseFloat(stat.getAttribute('data-target'));
+        const isDecimal = target % 1 !== 0;
+        let count = 0;
+        const duration = 2000; // ms
+        const increment = target / (duration / 16); // 60fps
+
+        const updateCount = () => {
+          count += increment;
+          if (count < target) {
+            stat.textContent = isDecimal ? count.toFixed(1) : Math.floor(count);
+            requestAnimationFrame(updateCount);
+          } else {
+            stat.textContent = isDecimal ? target.toFixed(1) : target;
+          }
+        };
+        updateCount();
       });
     }
 
-    setInterval(() => {
-      current = (current + 1) % slides.length;
-      showSlide(current);
-    }, 4000);
-  </script>
-  <script>
-  const counters = document.querySelectorAll('#stats-section h3');
-  let statsStarted = false;
-
-  function animateCounters() {
-    counters.forEach(counter => {
-      const target = parseFloat(counter.getAttribute('data-target'));
-      const isDecimal = target % 1 !== 0;
-      let count = 0;
-      const increment = target / 100;
-
-      const updateCount = () => {
-        count += increment;
-        if (count < target) {
-          counter.textContent = isDecimal ? count.toFixed(1) : Math.floor(count);
-          requestAnimationFrame(updateCount);
-        } else {
-          counter.textContent = isDecimal ? target.toFixed(1) : target;
-        }
-      };
-      updateCount();
-    });
-  }
-
-  function checkScroll() {
-    const statsSection = document.getElementById('stats-section');
-    const rect = statsSection.getBoundingClientRect();
-    if (!statsStarted && rect.top < window.innerHeight) {
-      statsStarted = true;
-      animateCounters();
+    function checkStatsScroll() {
+      const statsSection = document.getElementById('stats');
+      const rect = statsSection.getBoundingClientRect();
+      if (!statsStarted && rect.top < window.innerHeight * 0.8) {
+        statsStarted = true;
+        animateStats();
+      }
     }
-  }
 
-  window.addEventListener('scroll', checkScroll);
-</script>
-   <footer>
-    &copy; 2025 Solideo Finances. Tous droits réservés.
-  </footer>
+    window.addEventListener('scroll', checkStatsScroll);
+    setTimeout(checkStatsScroll, 500);
+
+    // Back to Top Button
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('active');
+      } else {
+        backToTopButton.classList.remove('active');
+      }
+    });
+
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Smooth Scroll for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          const headerHeight = document.getElementById('header').offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          if (navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
