@@ -5,244 +5,1004 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simulation de Financement | Solideo Finances</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
+    :root {
+      --primary: #0a2540;
+      --primary-light: #1a3a5f;
+      --primary-dark: #051a30;
+      --secondary: #c8a45c;
+      --secondary-light: #d9bc7d;
+      --secondary-dark: #b08d3e;
+      --accent: #e6f0ff;
+      --text: #333333;
+      --text-light: #666666;
+      --light: #f8f9fa;
+      --white: #ffffff;
+      --dark: #1a1a1a;
+      --error: #e74c3c;
+      --success: #27ae60;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --shadow-strong: 0 15px 35px rgba(0, 0, 0, 0.12);
+      --radius: 12px;
+      --radius-sm: 6px;
+      --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+    
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: #f4f4f4;
-      color: #333;
     }
-    header {
-  background-color: #003366;
-  color: white;
-  padding: 2rem;
-  text-align: center;
-}
-header img {
-  width: 80px;
-  display: block;
-  margin: 0 auto 1rem;
-  animation: popIn 1s ease-out;
-}
-
-    header nav a {
-      color: white;
-      margin-left: 1.5rem;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f4f4;
-      color: #333;
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.7;
+      background-color: var(--light);
+      color: var(--text);
+      padding: 0;
+      overflow-x: hidden;
     }
-
-    nav {
-  background-color: #003366;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: center; /* centre horizontalement */
-  align-items: center;
-  gap: 2rem; /* espace entre les liens */
-  flex-wrap: wrap;
-}
-    nav a {
-      color: white;
+    
+    /* Header & Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: var(--transition);
+      padding: 20px 0;
+      background: rgba(10, 37, 64, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
       text-decoration: none;
-      margin: 0 1.5rem;
-      font-weight: bold;
-      font-size: 1.1rem;
     }
-
+    
+    .logo img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+      transition: var(--transition);
+    }
+    
+    .logo-text {
+      color: var(--white);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 8px 0;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--secondary);
+      transition: var(--transition);
+    }
+    
     nav a:hover {
-      text-decoration: underline;
+      color: var(--secondary);
     }
-    @media (max-width: 768px) {
-      nav a {
-        display: none;
+    
+    nav a:hover::after {
+      width: 100%;
+    }
+    
+    .nav-cta {
+      background: var(--secondary);
+      color: var(--primary-dark) !important;
+      padding: 10px 20px !important;
+      border-radius: 30px;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(200, 164, 92, 0.3);
+      transition: var(--transition);
+    }
+    
+    .nav-cta:hover {
+      background: var(--secondary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(200, 164, 92, 0.4);
+    }
+    
+    .nav-cta::after {
+      display: none;
+    }
+    
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 30px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: var(--white);
+      padding: 100px 0 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.1;
+      z-index: 0;
+    }
+    
+    .page-header .container {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .page-subtitle {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+    
+    /* Main Content */
+    .main-content {
+      padding: 80px 0;
+    }
+    
+    .section {
+      margin-bottom: 60px;
+    }
+    
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--secondary);
+    }
+    
+    /* Simulation Card */
+    .simulation-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-strong);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    
+    .simulation-header {
+      background: linear-gradient(to right, var(--primary), var(--primary-light));
+      padding: 25px 30px;
+      color: var(--white);
+    }
+    
+    .simulation-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    
+    .simulation-description {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+    
+    .simulation-body {
+      padding: 30px;
+    }
+    
+    /* Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .tab-button {
+      padding: 12px 25px;
+      background: transparent;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
+      border-radius: 30px;
+    }
+    
+    .tab-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--secondary);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+      border-radius: 30px;
+      transform: scale(0.9);
+    }
+    
+    .tab-button:hover {
+      color: var(--primary);
+    }
+    
+    .tab-button:hover::before {
+      opacity: 0.1;
+      transform: scale(1);
+    }
+    
+    .tab-button.active {
+      color: var(--primary-dark);
+    }
+    
+    .tab-button.active::before {
+      opacity: 1;
+      background: var(--secondary);
+    }
+    
+    /* Form Styles */
+    .form-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      transition: var(--transition);
+      background-color: var(--white);
+    }
+    
+    .form-control:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(200, 164, 92, 0.1);
+    }
+    
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230a2540' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 14px 30px;
+      background: linear-gradient(to right, var(--secondary), var(--secondary-light));
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      box-shadow: 0 5px 15px rgba(200, 164, 92, 0.3);
+      text-align: center;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--primary);
+      transition: var(--transition);
+      z-index: -1;
+    }
+    
+    .btn:hover {
+      color: var(--white);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(200, 164, 92, 0.4);
+    }
+    
+    .btn:hover::before {
+      width: 100%;
+    }
+    
+    .btn i {
+      margin-right: 8px;
+    }
+    
+    .btn-block {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    
+    /* Results */
+    .result-container {
+      margin-top: 40px;
+      padding: 30px;
+      background: var(--accent);
+      border-radius: var(--radius);
+      border-left: 5px solid var(--secondary);
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .result-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    }
+    
+    .result-item:last-child {
+      border-bottom: none;
+    }
+    
+    .result-label {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .result-value {
+      font-weight: 700;
+      color: var(--secondary-dark);
+    }
+    
+    .result-highlight {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(200, 164, 92, 0.1);
+      border-radius: var(--radius-sm);
+      text-align: center;
+    }
+    
+    .result-highlight .result-value {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .download-btn {
+      margin-top: 20px;
+      display: none;
+    }
+    
+    /* Stats Section */
+    .stats-section {
+      background: var(--white);
+      padding: 60px 0;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+    
+    .chart-container {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+    }
+    
+    .chart-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+    
+    .chart-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    /* Footer */
+    footer {
+      background: var(--primary-dark);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 80px 0 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(to right, var(--primary), var(--secondary), var(--primary));
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 50px;
+      margin-bottom: 50px;
+    }
+    
+    .footer-column h4 {
+      color: var(--white);
+      font-size: 1.3rem;
+      margin-bottom: 25px;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .footer-column h4::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--secondary);
+    }
+    
+    .footer-about img {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+    
+    .footer-about p {
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    
+    .footer-links ul {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 12px;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary);
+      transform: translateX(5px);
+    }
+    
+    .footer-links a i {
+      font-size: 0.8rem;
+    }
+    
+    .footer-contact p {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+    
+    .footer-contact i {
+      color: var(--secondary);
+      font-size: 1.2rem;
+      margin-top: 3px;
+    }
+    
+    .footer-newsletter p {
+      margin-bottom: 20px;
+    }
+    
+    .newsletter-form {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      color: var(--white);
+      font-size: 0.9rem;
+    }
+    
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+    
+    .newsletter-button {
+      background: var(--secondary);
+      color: var(--primary-dark);
+      border: none;
+      padding: 12px 15px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .newsletter-button:hover {
+      background: var(--secondary-light);
+      transform: translateY(-3px);
+    }
+    
+    .footer-social {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1.1rem;
+      transition: var(--transition);
+    }
+    
+    .social-icon:hover {
+      background: var(--secondary);
+      color: var(--primary-dark);
+      transform: translateY(-5px);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+    }
+    
+    .footer-bottom a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
       }
-      .menu-active {
-        display: block;
-        position: absolute;
-        top: 4rem;
+    }
+    
+    @media (max-width: 992px) {
+      .page-title {
+        font-size: 2.5rem;
+      }
+      
+      nav ul {
+        display: none;
+        position: fixed;
+        top: 0;
         left: 0;
         width: 100%;
-        background-color: #003366;
-        text-align: center;
-        padding: 1rem;
+        height: 100vh;
+        background: rgba(10, 37, 64, 0.95);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        z-index: 1000;
+        transition: var(--transition);
       }
-      .menu-active a {
+      
+      nav ul.active {
+        display: flex;
+      }
+      
+      nav a {
+        font-size: 1.2rem;
+      }
+      
+      .menu-toggle {
         display: block;
-        margin: 1rem 0;
       }
     }
-    h1, h2 { color: #003366; text-align: center; }
-    section {
-      max-width: 900px;
-      margin: 2rem auto;
-      background-color: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    
+    @media (max-width: 768px) {
+      .page-title {
+        font-size: 2rem;
+      }
+      
+      .page-subtitle {
+        font-size: 1rem;
+      }
+      
+      .simulation-body {
+        padding: 20px;
+      }
+      
+      .tabs {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
     }
-    .form-group {
-      margin-bottom: 1rem;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .btn {
-      padding: 0.8rem 1.5rem;
-      background-color: #003366;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .result {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: #e6f0ff;
-      border-left: 5px solid #003366;
-    }
-    .flex-toggle {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      justify-content: center;
-    }
-    .flex-toggle button {
-      padding: 0.5rem 1rem;
-      background: #eee;
-      border: 1px solid #ccc;
-      cursor: pointer;
-    }
-    .flex-toggle button.active {
-      background: #003366;
-      color: white;
-    }
-    .slogan {
-  font-style: italic;
-  font-size: 1.1rem;
-  margin-top: 0.5rem;
-}
-
-#mobile-menu {
-  display: none; /* caché par défaut */
-}
-
-@media (max-width: 768px) {
-  #mobile-menu {
-    display: block;
-  }
-}
-
-
-    /* Responsive breakpoints */
-    @media screen and (max-width: 768px) {
-      section {
+    
+    @media (max-width: 576px) {
+      .container {
+        padding: 0 20px;
+      }
+      
+      .page-header {
+        padding: 80px 0 40px;
+      }
+      
+      .page-title {
+        font-size: 1.8rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+      }
+      
+      .simulation-title {
+        font-size: 1.5rem;
+      }
+      
+      .btn {
         width: 100%;
-        padding: 1rem;
-      }
-      .form-group input, .form-group select {
-        padding: 0.6rem;
       }
     }
-    footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #eeeeee;
-  font-size: 0.9rem;
-}
-
   </style>
 </head>
 <body>
-  <header>
-    <img src="logo solideo.jpg" alt="Solideo logo">
-    <h1>Solideo Finances</h1>
-    <p class="slogan">« Bâtir ensemble votre avenir financier »</p>
-    <nav>
-        <!-- Menu mobile -->
-        <div class="menu-active" id="mobile-menu">
-          <a href="index.html">Accueil</a>
-          <a href="simulation.html">Simulation</a>
-          <a href="formulaire_demande.html">Formulaire</a>
-        </div>
+  <!-- Header & Navigation -->
+  <header id="header">
+    <div class="container header-container">
+      <a href="index.html" class="logo">
+        <img src="logo-solideo.jpg" alt="Solideo Finances">
+        <span class="logo-text">Solideo Finances</span>
+      </a>
+      <nav>
+        <button class="menu-toggle" id="menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul id="nav-menu">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="index.html#about">À propos</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#testimonials">Témoignages</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="formulaire_demande.html" class="nav-cta">Demande de financement</a></li>
+        </ul>
       </nav>
-  </header>
-  <img id="pdf-logo" src="logo solideo.jpg" style="display:none;" />
-  <section id="simulation">
-    <h2>Simulation de Financement</h2>
-    <div class="flex-toggle">
-      <button onclick="toggleForm('classic')" id="btn-classic" class="active">Classique</button>
-      <button onclick="toggleForm('revenus')" id="btn-revenus">Sans remboursement direct</button>
     </div>
+  </header>
 
-    <form id="classic-form">
-      <div class="form-group">
-        <label>Nom et Prénom</label>
-        <input type="text" id="user-name" required>
-      </div>
-      <div class="form-group">
-        <label>Montant emprunté (€)</label>
-        <input type="number" id="amount" required>
-      </div>
-      <div class="form-group">
-        <label>Durée (en mois)</label>
-        <input type="number" id="duration" required>
-      </div>
-      <div class="form-group">
-        <label>Taux d'intérêt (%)</label>
-        <input type="number" id="rate" required>
-      </div>
-      <button type="button" class="btn" onclick="calculateLoan()">Calculer</button>
-    </form>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title" data-aos="fade-up">Simulation de Financement</h1>
+      <p class="page-subtitle" data-aos="fade-up" data-aos-delay="200">Estimez vos mensualités et obtenez une première évaluation de votre projet financier</p>
+    </div>
+  </div>
 
-    <form id="revenus-form" style="display:none">
-      <div class="form-group">
-        <label>Nom et Prénom</label>
-        <input type="text" id="user-name_financement" required>
-      </div>
-      <div class="form-group">
-        <label>Montant demandé (€)</label>
-        <input type="number" id="fund-amount">
-      </div>
-      <div class="form-group">
-        <label>Type de projet</label>
-        <select id="fund-type">
-          <option value="auto">Création entreprise</option>
-          <option value="immobilier">Projet immobilier</option>
-          <option value="autre">Autre</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>% des revenus à partager (par ex. 8%)</label>
-        <input type="number" id="revenue-share">
-      </div>
-      <button type="button" class="btn" onclick="calculateRevenueFunding()">Estimer</button>
-    </form>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <!-- Simulation Section -->
+      <section class="section" data-aos="fade-up">
+        <h2 class="section-title">Calculez votre financement</h2>
+        
+        <div class="simulation-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="simulation-header">
+            <h3 class="simulation-title">Simulateur de financement</h3>
+            <p class="simulation-description">Choisissez le type de financement qui correspond à votre projet</p>
+          </div>
+          
+          <div class="simulation-body">
+            <div class="tabs">
+              <button class="tab-button active" id="btn-classic" onclick="toggleForm('classic')">
+                <i class="fas fa-calculator"></i> Crédit classique
+              </button>
+              <button class="tab-button" id="btn-revenus" onclick="toggleForm('revenus')">
+                <i class="fas fa-chart-line"></i> Financement sur revenus
+              </button>
+            </div>
+            
+            <div class="form-container">
+              <!-- Classic Loan Form -->
+              <form id="classic-form">
+                <div class="form-group">
+                  <label class="form-label">Nom et Prénom</label>
+                  <input type="text" id="user-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Montant emprunté (€)</label>
+                  <input type="number" id="amount" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Durée (en mois)</label>
+                  <input type="number" id="duration" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Taux d'intérêt (%)</label>
+                  <input type="number" id="rate" class="form-control" step="0.01" required>
+                </div>
+                <button type="button" class="btn btn-block" onclick="calculateLoan()">
+                  <i class="fas fa-calculator"></i> Calculer ma mensualité
+                </button>
+              </form>
+              
+              <!-- Revenue Funding Form -->
+              <form id="revenus-form" style="display:none">
+                <div class="form-group">
+                  <label class="form-label">Nom et Prénom</label>
+                  <input type="text" id="user-name_financement" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Montant demandé (€)</label>
+                  <input type="number" id="fund-amount" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Type de projet</label>
+                  <select id="fund-type" class="form-control">
+                    <option value="auto">Création entreprise</option>
+                    <option value="immobilier">Projet immobilier</option>
+                    <option value="autre">Autre</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">% des revenus à partager (par ex. 8%)</label>
+                  <input type="number" id="revenue-share" class="form-control" step="0.01" required>
+                </div>
+                <button type="button" class="btn btn-block" onclick="calculateRevenueFunding()">
+                  <i class="fas fa-chart-line"></i> Estimer mon financement
+                </button>
+              </form>
+              
+              <!-- Results Container -->
+              <div class="result-container" id="result">
+                <h4 class="result-title">Résultats de votre simulation</h4>
+                <div id="result-content"></div>
+              </div>
+              
+              <button id="downloadBtn" class="btn btn-block download-btn" onclick="downloadPDF()">
+                <i class="fas fa-file-pdf"></i> Télécharger en PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Statistics Section -->
+      <section class="section stats-section" data-aos="fade-up">
+        <h2 class="section-title">Statistiques clés</h2>
+        
+        <div class="stats-grid">
+          <div class="chart-container" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="chart-title">Visiteurs cette semaine</h3>
+            <canvas id="visitesChart"></canvas>
+          </div>
+          
+          <div class="chart-container" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="chart-title">Répartition des types de projets</h3>
+            <canvas id="typesChart"></canvas>
+          </div>
+          
+          <div class="chart-container" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="chart-title">Taux de satisfaction client</h3>
+            <canvas id="satisfactionChart"></canvas>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 
-    <div id="result" class="result" style="display:none"></div>
-    <button id="downloadBtn" style="display:none" class="btn" onclick="downloadPDF()"><i class="fa fa-download"></i> Télécharger PDF</button>
-   
-  </section>
-  
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column footer-about">
+          <img src="logo-solideo.jpg" alt="Solideo Finances">
+          <p>Solideo Finances vous accompagne dans tous vos projets avec des solutions de financement sur-mesure, transparentes et adaptées à votre situation.</p>
+          <div class="footer-social">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-column footer-links">
+          <h4>Liens rapides</h4>
+          <ul>
+            <li><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+            <li><a href="index.html#about"><i class="fas fa-chevron-right"></i> À propos</a></li>
+            <li><a href="index.html#services"><i class="fas fa-chevron-right"></i> Services</a></li>
+            <li><a href="index.html#testimonials"><i class="fas fa-chevron-right"></i> Témoignages</a></li>
+            <li><a href="index.html#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column footer-links">
+          <h4>Nos services</h4>
+          <ul>
+            <li><a href="services.html#regroupement"><i class="fas fa-chevron-right"></i> Regroupement de crédits</a></li>
+            <li><a href="services.html#immobilier"><i class="fas fa-chevron-right"></i> Financement immobilier</a></li>
+            <li><a href="services.html#consommation"><i class="fas fa-chevron-right"></i> Crédit à la consommation</a></li>
+            <li><a href="services.html#independants"><i class="fas fa-chevron-right"></i> Accompagnement des indépendants</a></li>
+            <li><a href="services.html#budget"><i class="fas fa-chevron-right"></i> Conseil en gestion budgétaire</a></li>
+          </ul>
+        </div>
+        <div class="footer-column footer-newsletter">
+          <h4>Newsletter</h4>
+          <p>Inscrivez-vous à notre newsletter pour recevoir nos actualités et conseils financiers.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Votre email" class="newsletter-input" required>
+            <button type="submit" class="newsletter-button"><i class="fas fa-paper-plane"></i></button>
+          </form>
+          <div class="footer-contact">
+            <p><i class="fas fa-phone-alt"></i> 07 56 82 39 16</p>
+            <p><i class="fas fa-envelope"></i> solideofinance@gmail.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Solideo Finances. Tous droits réservés. | <a href="privacy.html">Politique de confidentialité</a> | <a href="terms.html">Conditions d'utilisation</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Hidden Image for PDF -->
+  <img id="pdf-logo" src="logo-solideo.jpg" style="display:none;" />
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
   <script>
-     function downloadPDF() {
-      generatePDF();}
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      easing: 'ease',
+      once: true,
+      offset: 100
+    });
+    
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    menuToggle.addEventListener('click', function() {
+      navMenu.classList.toggle('active');
+      if (navMenu.classList.contains('active')) {
+        menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+      } else {
+        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+      }
+    });
+    
+    // Toggle Form
     function toggleForm(mode) {
       document.getElementById('classic-form').style.display = mode === 'classic' ? 'block' : 'none';
       document.getElementById('revenus-form').style.display = mode === 'revenus' ? 'block' : 'none';
@@ -252,204 +1012,461 @@ header img {
       document.getElementById('downloadBtn').style.display = 'none';
     }
 
+    // Calculate Classic Loan
     function calculateLoan() {
       const amount = parseFloat(document.getElementById('amount').value);
       const duration = parseInt(document.getElementById('duration').value);
       const rate = parseFloat(document.getElementById('rate').value) / 100 / 12;
+      const userName = document.getElementById('user-name').value;
+
+      if (!amount || !duration || !rate || !userName) {
+        alert('Veuillez remplir tous les champs');
+        return;
+      }
 
       const mensualite = (amount * rate) / (1 - Math.pow(1 + rate, -duration));
       const total = mensualite * duration;
+      const interets = total - amount;
 
-      const result = `Mensualité estimée : ${mensualite.toFixed(2)} €<br>Total à rembourser : ${total.toFixed(2)} €`;
-      displayResult(result);
+      let resultHTML = `
+        <div class="result-item">
+          <span class="result-label">Montant emprunté :</span>
+          <span class="result-value">${amount.toLocaleString('fr-FR')} €</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Durée :</span>
+          <span class="result-value">${duration} mois (${(duration/12).toFixed(1)} ans)</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Taux d'intérêt :</span>
+          <span class="result-value">${(rate * 1200).toFixed(2)} %</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Total des intérêts :</span>
+          <span class="result-value">${interets.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Coût total du crédit :</span>
+          <span class="result-value">${total.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €</span>
+        </div>
+        <div class="result-highlight">
+          <div class="result-label">Mensualité estimée</div>
+          <div class="result-value">${mensualite.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €</div>
+        </div>
+      `;
+
+      displayResult(resultHTML);
     }
 
+    // Calculate Revenue Funding
     function calculateRevenueFunding() {
       const amount = parseFloat(document.getElementById('fund-amount').value);
       const share = parseFloat(document.getElementById('revenue-share').value);
       const type = document.getElementById('fund-type').value;
+      const userName = document.getElementById('user-name_financement').value;
 
-      const estimatedTotal = amount * (1 + share / 100 * 3); // simulation grossière pour 3 ans
-      const result = `Vous devrez partager ${share}% de vos revenus pendant 3 ans.<br>Estimation de contribution totale : ${estimatedTotal.toFixed(2)} €`;
-      displayResult(result);
+      if (!amount || !share || !userName) {
+        alert('Veuillez remplir tous les champs');
+        return;
+      }
+
+      // Calcul plus détaillé pour le financement sur revenus
+      const duration = 36; // 3 ans en mois
+      const estimatedMonthlyRevenue = type === 'immobilier' ? amount * 0.008 : 
+                                     type === 'auto' ? amount * 0.01 : 
+                                     amount * 0.012;
+      const monthlyContribution = estimatedMonthlyRevenue * (share / 100);
+      const estimatedTotal = monthlyContribution * duration;
+      const effectiveRate = ((estimatedTotal / amount) - 1) * 100;
+
+      let resultHTML = `
+        <div class="result-item">
+          <span class="result-label">Montant financé :</span>
+          <span class="result-value">${amount.toLocaleString('fr-FR')} €</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Type de projet :</span>
+          <span class="result-value">${type === 'immobilier' ? 'Projet immobilier' : 
+                                      type === 'auto' ? 'Création entreprise' : 'Autre projet'}</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Pourcentage des revenus :</span>
+          <span class="result-value">${share.toFixed(2)} %</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Durée estimée :</span>
+          <span class="result-value">36 mois (3 ans)</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Contribution mensuelle estimée :</span>
+          <span class="result-value">${monthlyContribution.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €</span>
+        </div>
+        <div class="result-item">
+          <span class="result-label">Taux effectif global estimé :</span>
+          <span class="result-value">${effectiveRate.toFixed(2)} %</span>
+        </div>
+        <div class="result-highlight">
+          <div class="result-label">Contribution totale estimée</div>
+          <div class="result-value">${estimatedTotal.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €</div>
+        </div>
+      `;
+
+      displayResult(resultHTML);
     }
 
+    // Display Result
     function displayResult(html) {
-      const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = html;
-      resultDiv.style.display = 'block';
-      document.getElementById('downloadBtn').style.display = 'inline-block';
+      const resultContent = document.getElementById('result-content');
+      resultContent.innerHTML = html;
+      
+      const resultContainer = document.getElementById('result');
+      resultContainer.style.display = 'block';
+      
+      document.getElementById('downloadBtn').style.display = 'block';
+      
+      // Scroll to result
+      resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    async function generatePDF() {
-    try {
+
+    // Download PDF
+    async function downloadPDF() {
+      try {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
-        // Récupérer les données du formulaire
-        const userName = document.getElementById('user-name').value || "Non renseigné";
-        const amount = document.getElementById('amount').value || "0";
-        const duration = document.getElementById('duration').value || "0";
-        const rate = document.getElementById('rate').value || "0";
+        // Determine which form is active
+        const isClassicForm = document.getElementById('classic-form').style.display !== 'none';
         
-        // Calculer la mensualité (comme dans calculateLoan())
-        const monthlyRate = parseFloat(rate) / 100 / 12;
-        const mensualite = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -duration)).toFixed(2);
+        // Get form data
+        let userName, amount, duration, rate, mensualite, total;
+        
+        if (isClassicForm) {
+          userName = document.getElementById('user-name').value || "Non renseigné";
+          amount = document.getElementById('amount').value || "0";
+          duration = document.getElementById('duration').value || "0";
+          rate = document.getElementById('rate').value || "0";
+          
+          // Calculate monthly payment
+          const monthlyRate = parseFloat(rate) / 100 / 12;
+          mensualite = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -duration));
+          total = mensualite * duration;
+        } else {
+          userName = document.getElementById('user-name_financement').value || "Non renseigné";
+          amount = document.getElementById('fund-amount').value || "0";
+          const share = document.getElementById('revenue-share').value || "0";
+          const type = document.getElementById('fund-type').value;
+          
+          // Calculate revenue funding
+          const estimatedMonthlyRevenue = type === 'immobilier' ? amount * 0.008 : 
+                                         type === 'auto' ? amount * 0.01 : 
+                                         amount * 0.012;
+          mensualite = estimatedMonthlyRevenue * (share / 100);
+          total = mensualite * 36; // 3 years
+        }
 
-        // --- Chargement des images avec gestion d'erreur ---
-        let logoBase64, signatureBase64;
+        // Load images with error handling
+        let logoBase64;
         
         try {
-            logoBase64 = await loadImageAsBase64("logo solideo.jpg"); // Même chemin que dans ton HTML
+          logoBase64 = await loadImageAsBase64("logo-solideo.jpg");
         } catch (e) {
-            console.warn("Logo non trouvé, continuation sans logo");
-            logoBase64 = null;
-        }
-        
-        try {
-            signatureBase64 = await loadImageAsBase64("signaturesandra.png");
-        } catch (e) {
-            console.warn("Signature non trouvée, continuation sans signature");
-            signatureBase64 = null;
+          console.warn("Logo not found, continuing without logo");
+          logoBase64 = null;
         }
 
-        // --- Mise en page ---
+        // PDF Layout
         if (logoBase64) {
-            doc.addImage(logoBase64, 'JPEG', 10, 10, 40, 20);
+          doc.addImage(logoBase64, 'JPEG', 10, 10, 40, 40);
         }
 
-        doc.setFontSize(18);
+        doc.setFontSize(22);
         doc.setFont("helvetica", "bold");
-        doc.text("Simulation de financement", 105, 20, { align: "center" });
+        doc.setTextColor(10, 37, 64); // Primary color
+        doc.text("Simulation de financement", 105, 30, { align: "center" });
         
-        // Client
-        doc.setFontSize(12);
-        doc.text(`Client : ${userName}`, 20, 35);
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(51, 51, 51); // Text color
+        doc.text(`Client : ${userName}`, 105, 45, { align: "center" });
 
         doc.setLineWidth(0.5);
-        doc.line(20, 40, 190, 40);
+        doc.setDrawColor(200, 164, 92); // Secondary color
+        doc.line(20, 55, 190, 55);
 
-        // --- Données dynamiques ---
+        // Add date
+        const today = new Date();
+        doc.setFontSize(10);
+        doc.setTextColor(102, 102, 102); // Light text
+        doc.text(`Date : ${today.toLocaleDateString('fr-FR')}`, 20, 65);
+
+        // Title for simulation type
+        doc.setFontSize(16);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(10, 37, 64);
+        doc.text(isClassicForm ? "Simulation de crédit classique" : "Simulation de financement sur revenus", 105, 80, { align: "center" });
+
+        // Simulation details
         doc.setFontSize(12);
         doc.setFont("helvetica", "bold");
-        doc.text("Montant emprunté :", 20, 50);
+        doc.setTextColor(51, 51, 51);
+        
+        const startY = 95;
+        const lineHeight = 10;
+        
+        if (isClassicForm) {
+          // Classic loan details
+          doc.text("Montant emprunté :", 30, startY);
+          doc.setFont("helvetica", "normal");
+          doc.text(`${parseFloat(amount).toLocaleString('fr-FR')} €`, 120, startY);
+          
+          doc.setFont("helvetica", "bold");
+          doc.text("Durée :", 30, startY + lineHeight);
+          doc.setFont("helvetica", "normal");
+          doc.text(`${duration} mois (${(duration/12).toFixed(1)} ans)`, 120, startY + lineHeight);
+          
+          doc.setFont("helvetica", "bold");
+          doc.text("Taux d'intérêt :", 30, startY + lineHeight * 2);
+          doc.setFont("helvetica", "normal");
+          doc.text(`${rate} %`, 120, startY + lineHeight * 2);
+          
+          const interets = total - amount;
+          
+          doc.setFont("helvetica", "bold");
+          doc.text("Total des intérêts :", 30, startY + lineHeight * 3);
+          doc.setFont("helvetica", "normal");
+          doc.text(`${interets.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €`, 120, startY + lineHeight * 3);
+          
+          doc.setFont("helvetica", "bold");
+          doc.text("Coût total du crédit :", 30, startY + lineHeight * 4);
+          doc.setFont("helvetica", "normal");
+          doc.text(`${total.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €`, 120, startY + lineHeight * 4);
+        } else {
+          // Revenue funding details
+          const share = document.getElementById('revenue-share').value || "0";
+          const type = document.getElementById('fund-type').value;
+          const typeLabel = type === 'immobilier' ? 'Projet immobilier' : 
+                           type === 'auto' ? 'Création entreprise' : 'Autre projet';
+          
+          doc.text("Montant financé :", 30, startY);
+          doc.setFont("helvetica", "normal");
+          doc.text(`${parseFloat(amount).toLocaleString('fr-FR')} €`, 120, startY);
+          
+          doc.setFont("helvetica", "bold");
+          doc.text("Type de projet :", 30, startY + lineHeight);
+          doc.setFont("helvetica", "normal");
+          doc.text(typeLabel, 120, startY + lineHeight);
+          
+          doc.setFont("helvetica", "bold");
+          doc.text("Pourcentage des revenus :", 30, startY + lineHeight * 2);
+          doc.setFont("helvetica", "normal");
+          doc.text(`${share} %`, 120, startY + lineHeight * 2);
+          
+          doc.setFont("helvetica", "bold");
+          doc.text("Durée estimée :", 30, startY + lineHeight * 3);
+          doc.setFont("helvetica", "normal");
+          doc.text("36 mois (3 ans)", 120, startY + lineHeight * 3);
+          
+          const effectiveRate = ((total / amount) - 1) * 100;
+          
+          doc.setFont("helvetica", "bold");
+          doc.text("Taux effectif global estimé :", 30, startY + lineHeight * 4);
+          doc.setFont("helvetica", "normal");
+          doc.text(`${effectiveRate.toFixed(2)} %`, 120, startY + lineHeight * 4);
+        }
+
+        // Highlight result
+        doc.setDrawColor(200, 164, 92);
+        doc.setFillColor(248, 249, 250);
+        doc.roundedRect(30, startY + lineHeight * 6, 150, 30, 3, 3, 'FD');
+        
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(10, 37, 64);
+        doc.text(isClassicForm ? "Mensualité estimée" : "Contribution totale estimée", 105, startY + lineHeight * 7 + 5, { align: "center" });
+        
+        doc.setFontSize(16);
+        doc.text(isClassicForm ? 
+                `${mensualite.toLocaleString('fr-FR', {maximumFractionDigits: 2})} € / mois` : 
+                `${total.toLocaleString('fr-FR', {maximumFractionDigits: 2})} €`, 
+                105, startY + lineHeight * 9, { align: "center" });
+
+        // Disclaimer
+        doc.setFontSize(8);
+        doc.setFont("helvetica", "italic");
+        doc.setTextColor(102, 102, 102);
+        doc.text("Cette simulation est fournie à titre indicatif et ne constitue pas une offre contractuelle.", 105, 250, { align: "center" });
+        doc.text("Pour une étude personnalisée, veuillez nous contacter au 07 56 82 39 16.", 105, 255, { align: "center" });
+
+        // Footer
+        doc.setFontSize(10);
         doc.setFont("helvetica", "normal");
-        doc.text(`${amount} €`, 70, 50);
+        doc.text("Solideo Finances - solideofinance@gmail.com - 07 56 82 39 16", 105, 270, { align: "center" });
 
-        doc.setFont("helvetica", "bold");
-        doc.text("Durée :", 20, 60);
-        doc.text(`${duration} mois`, 70, 60);
-
-        doc.setFont("helvetica", "bold");
-        doc.text("Taux d'intérêt :", 20, 70);
-        doc.text(`${rate} %`, 70, 70);
-
-        doc.setFont("helvetica", "bold");
-        doc.text("Mensualité estimée :", 20, 80);
-        doc.text(`${mensualite} €`, 70, 80);
-
-        // ... (reste du code inchangé)
-
+        // Save PDF
         doc.save(`Simulation_Solideo_${userName.replace(/ /g, '_')}.pdf`);
         
-    } catch (error) {
+      } catch (error) {
         console.error("Erreur lors de la génération du PDF:", error);
         alert("Une erreur est survenue lors de la génération du PDF");
+      }
     }
-}
 
-// Fonction helper pour charger les images
-async function loadImageAsBase64(url) {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Image non trouvée");
-    const blob = await response.blob();
-    return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.readAsDataURL(blob);
+    // Helper function to load images
+    async function loadImageAsBase64(url) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Image not found");
+        const blob = await response.blob();
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(blob);
+        });
+      } catch (error) {
+        // Try to use the hidden image in the DOM as fallback
+        const imgElement = document.getElementById('pdf-logo');
+        if (imgElement) {
+          const canvas = document.createElement('canvas');
+          canvas.width = imgElement.width;
+          canvas.height = imgElement.height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(imgElement, 0, 0);
+          return canvas.toDataURL('image/jpeg');
+        }
+        throw error;
+      }
+    }
+
+    // Initialize Charts
+    document.addEventListener('DOMContentLoaded', function() {
+      // Visitors Chart
+      const ctx1 = document.getElementById('visitesChart').getContext('2d');
+      new Chart(ctx1, {
+        type: 'line',
+        data: {
+          labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+          datasets: [{
+            label: 'Visiteurs/jour',
+            data: [120, 150, 180, 130, 200, 350, 400],
+            borderColor: '#0a2540',
+            backgroundColor: 'rgba(10, 37, 64, 0.1)',
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#c8a45c',
+            pointBorderColor: '#fff',
+            pointRadius: 5,
+            pointHoverRadius: 7
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    
+      // Project Types Chart
+      const ctx2 = document.getElementById('typesChart').getContext('2d');
+      new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: ['Immobilier', 'Auto', 'Entreprise', 'Conso', 'Rachat'],
+          datasets: [{
+            label: 'Demandes',
+            data: [40, 25, 30, 15, 20],
+            backgroundColor: [
+              'rgba(200, 164, 92, 0.8)',
+              'rgba(10, 37, 64, 0.8)',
+              'rgba(200, 164, 92, 0.6)',
+              'rgba(10, 37, 64, 0.6)',
+              'rgba(200, 164, 92, 0.4)'
+            ],
+            borderColor: [
+              'rgba(200, 164, 92, 1)',
+              'rgba(10, 37, 64, 1)',
+              'rgba(200, 164, 92, 1)',
+              'rgba(10, 37, 64, 1)',
+              'rgba(200, 164, 92, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+              }
+            },
+            x: {
+              grid: {
+                display: false
+              }
+            }
+          }
+        }
+      });
+    
+      // Satisfaction Chart
+      const ctx3 = document.getElementById('satisfactionChart').getContext('2d');
+      new Chart(ctx3, {
+        type: 'doughnut',
+        data: {
+          labels: ['Très satisfait', 'Satisfait', 'Neutre', 'Mécontent'],
+          datasets: [{
+            data: [60, 25, 10, 5],
+            backgroundColor: [
+              'rgba(200, 164, 92, 0.8)',
+              'rgba(10, 37, 64, 0.8)',
+              'rgba(200, 164, 92, 0.4)',
+              'rgba(10, 37, 64, 0.4)'
+            ],
+            borderColor: [
+              'rgba(200, 164, 92, 1)',
+              'rgba(10, 37, 64, 1)',
+              'rgba(200, 164, 92, 1)',
+              'rgba(10, 37, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 20,
+                boxWidth: 12
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
     });
-}
-
-
   </script>
-
-  <!-- SECTION STATISTIQUES AVEC GRAPHES -->
-<section>
-    <h2>Statistiques clés</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-      <div>
-        <canvas id="visitesChart"></canvas>
-      </div>
-      <div>
-        <canvas id="typesChart"></canvas>
-      </div>
-      <div>
-        <canvas id="satisfactionChart"></canvas>
-      </div>
-    </div>
-  </section>
-  
-  <!-- SCRIPTS DES GRAPHES -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    // Graphique 1 - Visiteurs hebdo
-    const ctx1 = document.getElementById('visitesChart').getContext('2d');
-    new Chart(ctx1, {
-      type: 'line',
-      data: {
-        labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
-        datasets: [{
-          label: 'Visiteurs/jour',
-          data: [120, 150, 180, 130, 200, 350, 400],
-          borderColor: '#2e6eb8',
-          backgroundColor: 'rgba(46,110,184,0.2)',
-          fill: true,
-          tension: 0.4
-        }]
-      },
-      options: {
-        plugins: { title: { display: true, text: 'Visiteurs cette semaine' } },
-        responsive: true
-      }
-    });
-  
-    // Graphique 2 - Types de projets
-    const ctx2 = document.getElementById('typesChart').getContext('2d');
-    new Chart(ctx2, {
-      type: 'bar',
-      data: {
-        labels: ['Immobilier', 'Auto', 'Entreprise', 'Conso', 'Rachat'],
-        datasets: [{
-          label: 'Demandes',
-          data: [40, 25, 30, 15, 20],
-          backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#009879']
-        }]
-      },
-      options: {
-        plugins: { title: { display: true, text: 'Répartition des types de projets' } },
-        responsive: true
-      }
-    });
-  
-    // Graphique 3 - Satisfaction clients
-    const ctx3 = document.getElementById('satisfactionChart').getContext('2d');
-    new Chart(ctx3, {
-      type: 'doughnut',
-      data: {
-        labels: ['Très satisfait', 'Satisfait', 'Neutre', 'Mécontent'],
-        datasets: [{
-          data: [60, 25, 10, 5],
-          backgroundColor: ['#00cc99', '#66ccff', '#cccccc', '#ff6666']
-        }]
-      },
-      options: {
-        plugins: { title: { display: true, text: 'Taux de satisfaction client' } },
-        responsive: true
-      }
-    });
-  </script>
-   <footer>
-    &copy; 2025 Solideo Finances. Tous droits réservés.
-  </footer>
-  
 </body>
 </html>
