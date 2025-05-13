@@ -1185,93 +1185,78 @@
         });
         
         // Affichage des noms de fichiers sélectionnés
-        document.getElementById('piece_identite').addEventListener('change', function(e) {
-            const fileName = e.target.files[0] ? e.target.files[0].name : 'Aucun fichier sélectionné';
-            document.getElementById('piece-identite-name').textContent = fileName;
-        });
-        
-        document.getElementById('justificatif_domicile').addEventListener('change', function(e) {
-            const fileName = e.target.files[0] ? e.target.files[0].name : 'Aucun fichier sélectionné';
-            document.getElementById('justificatif-domicile-name').textContent = fileName;
-        });
-        
-        document.getElementById('titre_sejour').addEventListener('change', function(e) {
-            const fileName = e.target.files[0] ? e.target.files[0].name : 'Aucun fichier sélectionné';
-            document.getElementById('titre-sejour-name').textContent = fileName;
-        });
-        
-        document.getElementById('bulletins_salaire').addEventListener('change', function(e) {
-            const fileCount = e.target.files.length;
-            document.getElementById('bulletins-salaire-name').textContent = 
-                fileCount > 0 ? `${fileCount} fichier(s) sélectionné(s)` : 'Aucun fichier sélectionné';
-        });
-        
-        document.getElementById('releves_bancaires').addEventListener('change', function(e) {
-            const fileCount = e.target.files.length;
-            document.getElementById('releves-bancaires-name').textContent = 
-                fileCount > 0 ? `${fileCount} fichier(s) sélectionné(s)` : 'Aucun fichier sélectionné';
-        });
-        
-        document.getElementById('factures_devis').addEventListener('change', function(e) {
-            const fileCount = e.target.files.length;
-            document.getElementById('factures-devis-name').textContent = 
-                fileCount > 0 ? `${fileCount} fichier(s) sélectionné(s)` : 'Aucun fichier sélectionné';
-        });
-        
-        document.getElementById('rib').addEventListener('change', function(e) {
-            const fileName = e.target.files[0] ? e.target.files[0].name : 'Aucun fichier sélectionné';
-            document.getElementById('rib-name').textContent = fileName;
-        });
-        
-        // Gestion de la soumission du formulaire
         document.getElementById('financeForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+    e.preventDefault();
+    
+    // Afficher le loader
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('successMessage').style.display = 'none';
+    document.getElementById('errorMessage').style.display = 'none';
+    
+    // Récupérer les données du formulaire
+    const formData = new FormData(this);
+    const formObject = {};
+    
+    // Convertir FormData en objet et nettoyer les données
+    formData.forEach((value, key) => {
+        // Ignorer les fichiers
+        if (key.includes('file') || value instanceof File) return;
+        
+        // Nettoyer et limiter la taille des valeurs
+        if (typeof value === 'string') {
+            // Limiter la longueur à 1000 caractères pour éviter les problèmes
+            formObject[key] = value.substring(0, 1000);
+        } else {
+            formObject[key] = value;
+        }
+    });
+    
+    // Ajouter des informations sur les fichiers (juste les noms, pas les fichiers eux-mêmes)
+    const fileInfo = {};
+    const fileInputs = ['piece_identite', 'justificatif_domicile', 'titre_sejour', 
+                        'bulletins_salaire', 'releves_bancaires', 'factures_devis', 'rib'];
+    
+    fileInputs.forEach(inputId => {
+        const input = document.getElementById(inputId);
+        if (input && input.files.length > 0) {
+            fileInfo[inputId] = Array.from(input.files).map(f => f.name).join(', ');
+        } else {
+            fileInfo[inputId] = 'Aucun fichier';
+        }
+    });
+    
+    // Ajouter les informations sur les fichiers à l'objet à envoyer
+    formObject.filesInfo = JSON.stringify(fileInfo);
+    
+    console.log('Données envoyées:', formObject); // Pour déboguer
+    
+    // Envoyer les données via EmailJS
+    emailjs.send("service_i29hgy5", "template_advssfi", formObject)
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
             
-            // Afficher le loader
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
+            // Faire défiler jusqu'au message de succès
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
             
-            // Récupérer les données du formulaire
-            const formData = new FormData(this);
-            const formObject = {};
+            // Réinitialiser le formulaire
+            document.getElementById('financeForm').reset();
             
-            // Convertir FormData en objet
-            formData.forEach((value, key) => {
-                if (key.includes('file')) return; // On gère les fichiers séparément
-                formObject[key] = value;
-            });
+            // Réinitialiser les noms de fichiers
+            const fileNames = document.querySelectorAll('.file-name');
+            fileNames.forEach(el => el.textContent = 'Aucun fichier sélectionné');
+        }, function(error) {
+            console.log('FAILED...', error);
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('errorText').textContent = 
+                'Une erreur est survenue: ' + (error.text || 'Veuillez réessayer plus tard.');
             
-            // Envoyer les données via EmailJS
-            emailjs.send("service_i29hgy5", "template_advssfi", formObject) // À remplacer par vos IDs
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('successMessage').style.display = 'block';
-                    
-                    // Faire défiler jusqu'au message de succès
-                    document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
-                    
-                    // Réinitialiser le formulaire
-                    document.getElementById('financeForm').reset();
-                    
-                    // Réinitialiser les noms de fichiers
-                    const fileNames = document.querySelectorAll('.file-name');
-                    fileNames.forEach(el => el.textContent = 'Aucun fichier sélectionné');
-                }, function(error) {
-                    console.log('FAILED...', error);
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('errorMessage').style.display = 'block';
-                    document.getElementById('errorText').textContent = 
-                        'Une erreur est survenue: ' + (error.text || 'Veuillez réessayer plus tard.');
-                    
-                    // Faire défiler jusqu'au message d'erreur
-                    document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
-                });
-            
-            // Ici vous pourriez aussi envoyer les fichiers via un service comme Uploadcare
-            // ou les stocker temporairement avant envoi par email
+            // Faire défiler jusqu'au message d'erreur
+            document.getElementById('errorMessage').scrollIntoView({ behavior: 'smooth' });
         });
+});
     </script>
 </body>
 </html>
