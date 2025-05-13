@@ -712,127 +712,71 @@
       gap: 10px;
     }
 
-    /* Testimonials Section */
-    .testimonials-slider {
-      position: relative;
-      max-width: 900px;
-      margin: 0 auto;
-      overflow: hidden;
-    }
+    /* Nouvelles couleurs pour les cartes de témoignages */
+.testimonial-card {
+  background-color: #2c3e50; /* Couleur de fond plus foncée */
+  color: #ffffff; /* Texte en blanc pour un meilleur contraste */
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
 
-    .testimonials-track {
-      display: flex;
-      transition: transform 0.5s ease;
-    }
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
 
-    .testimonial-slide {
-      min-width: 100%;
-      padding: 20px;
-    }
+/* Correction pour la classe testimonial-content */
+.testimonial-content {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 30px;
+  position: relative;
+  color: #87ceeb; /* Bleu ciel */
+  z-index: 1;
+}
 
-    .testimonial-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 40px;
-      box-shadow: var(--shadow);
-      position: relative;
-    }
+.author-info h4 {
+  color: #e74c3c; /* Couleur d'accent pour le nom */
+  margin-bottom: 5px;
+}
 
-    .testimonial-card::before {
-      content: '\201C';
-      font-family: Georgia, serif;
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      font-size: 5rem;
-      color: rgba(200, 164, 92, 0.2);
-      line-height: 1;
-    }
+.author-info p {
+  color: #ecf0f1; /* Couleur plus claire pour la profession */
+}
 
-    .testimonial-content {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 30px;
-      position: relative;
-      z-index: 1;
-    }
+/* Style pour la section des témoignages */
+.section-dark#testimonials {
+  background-color: #1a252f; /* Fond plus foncé pour la section entière */
+  padding: 80px 0;
+}
 
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
+.section-dark .section-title h2 {
+  color: #3498db; /* Couleur bleue pour le titre principal */
+}
 
-    .author-image {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--secondary);
-    }
+.section-dark .section-title p {
+  color: #bdc3c7; /* Couleur grise claire pour la description */
+}
 
-    .author-info h4 {
-      font-size: 1.2rem;
-      margin-bottom: 5px;
-      color: var(--primary);
-    }
+/* Style pour les flèches de navigation */
+.testimonial-arrow {
+  background-color: #3498db;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-    .author-info p {
-      color: var(--text-light);
-      font-size: 0.9rem;
-    }
-
-    .testimonial-nav {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-top: 30px;
-    }
-
-    .testimonial-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(200, 164, 92, 0.3);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .testimonial-dot.active {
-      background: var(--secondary);
-      transform: scale(1.2);
-    }
-
-    .testimonial-arrows {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      z-index: 2;
-      padding: 0 20px;
-    }
-
-    .testimonial-arrow {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--white);
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: var(--transition);
-    }
-
-    .testimonial-arrow:hover {
-      background: var(--secondary);
-      color: var(--primary-dark);
-      transform: scale(1.1);
-    }
+.testimonial-arrow:hover {
+  background-color: #2980b9;
+}
 
     /* Stats Section */
     .stats-section {
