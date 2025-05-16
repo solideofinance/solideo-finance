@@ -978,127 +978,315 @@
     }
 
     /* Contact Section */
-    .contact-section {
-      background: var(--light);
-    }
+    /* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    .contact-container {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 50px;
-    }
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+}
 
-    .contact-info {
-      padding-right: 30px;
-    }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
 
-    .contact-info h3 {
-      font-size: 2rem;
-      color: var(--primary);
-      margin-bottom: 30px;
-    }
+.section {
+  padding: 80px 0;
+}
 
-    .contact-info p {
-      margin-bottom: 30px;
-      color: var(--text-light);
-    }
+/* Section Titles */
+.section-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
 
-    .contact-details {
-      margin-bottom: 30px;
-    }
+.section-title h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
 
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
+.section-title h2:after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  background-color: #3498db;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-    .contact-icon {
-      width: 50px;
-      height: 50px;
-      background: var(--primary);
-      color: var(--white);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      transition: var(--transition);
-    }
+.section-title p {
+  font-size: 18px;
+  color: #7f8c8d;
+  max-width: 700px;
+  margin: 0 auto;
+}
 
-    .contact-item:hover .contact-icon {
-      background: var(--secondary);
-      transform: scale(1.1);
-    }
+/* CTA Section */
+.cta-section {
+  background-color: #3498db;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
 
-    .contact-text {
-      font-size: 1.05rem;
-      color: var(--text);
-    }
+.cta-section:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.9) 0%, rgba(41, 128, 185, 0.9) 100%);
+  z-index: 1;
+}
 
-    .contact-text strong {
-      display: block;
-      color: var(--primary);
-      margin-bottom: 5px;
-    }
+.cta-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 30px 0;
+}
 
-    .contact-form {
-      background: var(--white);
-      padding: 40px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
+.cta-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 
-    .form-group {
-      margin-bottom: 20px;
-    }
+.cta-description {
+  font-size: 18px;
+  max-width: 800px;
+  margin: 0 auto 30px;
+  line-height: 1.7;
+}
 
-    .form-label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: var(--primary);
-    }
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
-    .form-control {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid #e0e0e0;
-      border-radius: var(--radius-sm);
-      font-size: 1rem;
-      transition: var(--transition);
-    }
+.btn {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 
-    .form-control:focus {
-      outline: none;
-      border-color: var(--secondary);
-      box-shadow: 0 0 0 3px rgba(200, 164, 92, 0.1);
-    }
+.btn-primary {
+  background-color: #fff;
+  color: #3498db;
+  border: 2px solid #fff;
+}
 
-    textarea.form-control {
-      min-height: 150px;
-      resize: vertical;
-    }
+.btn-primary:hover {
+  background-color: transparent;
+  color: #fff;
+}
 
-    .form-button {
-      width: 100%;
-      padding: 15px;
-      background: var(--primary);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
+.btn-secondary {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+}
 
-    .form-button:hover {
-      background: var(--primary-light);
-      transform: translateY(-3px);
-    }
+.btn-secondary:hover {
+  background-color: #fff;
+  color: #3498db;
+}
 
+/* Contact Section */
+.contact-section {
+  background-color: #f9f9f9;
+}
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.contact-info {
+  flex: 1;
+  min-width: 300px;
+}
+
+.contact-info h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.contact-info p {
+  margin-bottom: 30px;
+  color: #7f8c8d;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #3498db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.contact-icon i {
+  font-size: 18px;
+}
+
+.contact-text {
+  flex: 1;
+}
+
+.contact-text strong {
+  display: block;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.contact-text a:hover {
+  text-decoration: underline !important;
+}
+
+/* Contact Form */
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2c3e50;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.form-button:hover {
+  background-color: #2980b9;
+}
+
+/* Animation */
+[data-aos] {
+  opacity: 0;
+  transition: opacity 0.8s, transform 0.8s;
+}
+
+[data-aos="fade-up"] {
+  transform: translateY(50px);
+}
+
+[data-aos="fade-right"] {
+  transform: translateX(-50px);
+}
+
+[data-aos="fade-left"] {
+  transform: translateX(50px);
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+  transform: translate(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+  }
+  
+  .section {
+    padding: 60px 0;
+  }
+  
+  .section-title h2 {
+    font-size: 28px;
+  }
+  
+  .cta-title {
+    font-size: 26px;
+  }
+  
+  .cta-description {
+    font-size: 16px;
+  }
+}
     /* Footer */
     footer {
       background: var(--primary-dark);
@@ -1482,6 +1670,21 @@
       }
     }
   </style>
+  <head>
+  <!-- Autres balises meta et title -->
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  <!-- AOS Animation Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+  
+  <!-- Votre CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
 </head>
 <body>
   <!-- Preloader -->
@@ -1857,45 +2060,94 @@ https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid
   </section>
 
   <!-- Contact Section -->
-  <section class="section contact-section" id="contact">
-    <div class="container">
-      <div class="section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p>Besoin d'informations ou prêt à démarrer votre projet ? Notre équipe est à votre disposition</p>
+  <!-- CTA Section -->
+<section class="section cta-section" id="cta">
+  <div class="container">
+    <div class="cta-content" data-aos="fade-up">
+      <h2 class="cta-title">Prêt à concrétiser votre projet ?</h2>
+      <p class="cta-description">Pour toute première demande de financement réalisée avant le 30 juin, bénéficiez d'une simulation gratuite, de frais de dossier réduits de 50% et d'un rendez-vous conseil personnalisé offert.</p>
+      <div class="cta-buttons">
+        <a href="simulation.html" class="btn btn-primary">Faire une simulation</a>
+        <a href="#contact" class="btn btn-secondary">Nous contacter</a>
       </div>
-      <div class="contact-container"> <div class="contact-info" data-aos="fade-right"> <h3> Parlons de votre projet </h3> <p> Besoin d'informations ou prêt à démarrer votre projet ? Notre équipe est à votre disposition pour vous accompagner et répondre à toutes vos questions. </p> <div class="contact-details"> <div class="contact-item"> <div class="contact-icon"> <i class="fas fa-map-marker-alt"> </i> </div> <div class="contact-text"> <strong> Adresse </strong> 15 rue de la Finance, 75008 Paris </div> </div> <div class="contact-item"> <div class="contact-icon"> <i class="fas fa-phone-alt"> </i> </div> <div class="contact-text"> <strong> Téléphone </strong> 07 56 92 32 21 </div> </div> <div class="contact-item"> <div class="contact-icon"> <i class="fab fa-whatsapp"> </i> </div> <div class="contact-text"> <strong> WhatsApp </strong> 07 56 92 32 21 </div> </div> <div class="contact-item"> <div class="contact-icon"> <i class="fas fa-envelope"> </i> </div> <div class="contact-text"> <strong> Courriel </strong> solideofinance@gmail.com </div> </div> </div> </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section contact-section" id="contact">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2>Contact</h2>
+      <p>Besoin d'informations ou prêt à démarrer votre projet ? Notre équipe est à votre disposition</p>
+    </div>
+    <div class="contact-container">
+      <div class="contact-info" data-aos="fade-right">
+        <h3>Parlons de votre projet</h3>
+        <p>Besoin d'informations ou prêt à démarrer votre projet ? Notre équipe est à votre disposition pour vous accompagner et répondre à toutes vos questions.</p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <div class="contact-text">
+              <strong>Adresse</strong> 15 rue de la Finance, 75008 Paris
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="contact-text">
+              <strong>Téléphone</strong> <a href="tel:+33756923221" style="text-decoration: none; color: inherit;">07 56 92 32 21</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="contact-text">
+              <strong>WhatsApp</strong> <a href="https://wa.me/33756923221" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">07 56 92 32 21</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-text">
+              <strong>Courriel</strong> <a href="mailto:solideofinance@gmail.com" style="text-decoration: none; color: inherit;">solideofinance@gmail.com</a>
             </div>
           </div>
         </div>
-        <div class="contact-form" data-aos="fade-left">
-          <form action="mailto:solideofinance@gmail.com" method="post" enctype="text/plain">
-            <div class="form-group">
-              <label for="name" class="form-label">Nom complet</label>
-              <input type="text" id="name" name="name" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" id="email" name="email" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="phone" class="form-label">Téléphone</label>
-              <input type="tel" id="phone" name="phone" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="subject" class="form-label">Sujet</label>
-              <input type="text" id="subject" name="subject" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="message" class="form-label">Message</label>
-              <textarea id="message" name="message" class="form-control" required></textarea>
-            </div>
-            <button type="submit" class="form-button">Envoyer le message</button>
-          </form>
-        </div>
+      </div>
+      <div class="contact-form" data-aos="fade-left">
+        <form action="mailto:solideofinance@gmail.com" method="post" enctype="text/plain">
+          <div class="form-group">
+            <label for="name" class="form-label">Nom complet</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="phone" class="form-label">Téléphone</label>
+            <input type="tel" id="phone" name="phone" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="subject" class="form-label">Sujet</label>
+            <input type="text" id="subject" name="subject" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" name="message" class="form-control" required></textarea>
+          </div>
+          <button type="submit" class="form-button">Envoyer le message</button>
+        </form>
       </div>
     </div>
-  </section>
-
+  </div>
+</section>
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -2133,5 +2385,14 @@ https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid
       });
     });
   </script>
+  <!-- AOS Animation Library JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  // Initialiser AOS
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+</script>
 </body>
 </html>
